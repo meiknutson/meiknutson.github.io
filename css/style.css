@@ -23,7 +23,8 @@
   --ink: #000;
   --type-lg: 36.667;    /* px, on whichever artboard is showing */
   --type-label: 26;     /* piece labels and the nav, which match each other */
-  --type-stroke: 1;     /* px, same artboard units as --type-lg */
+  --type-stroke: 1.4;   /* px, same artboard units as --type-lg */
+  --nav-h: 72;          /* artboard px; the artboard's own bar is 104 */
   --artboard: 1440;  /* the desktop artboard width, for the pinned nav */
 }
 
@@ -230,13 +231,15 @@ body {
   pointer-events: none;
 
   --nav-scale: min(100vw, calc(var(--artboard) * 1px));
+  --nav-font: calc(var(--type-label) / var(--artboard) * var(--nav-scale));
+  --nav-line: calc(var(--nav-font) * 1.25);
 }
 
 .nav__frame {
   position: relative;
   width: 100%;
   max-width: calc(var(--artboard) * 1px);
-  aspect-ratio: var(--artboard) / 104;
+  aspect-ratio: var(--artboard) / var(--nav-h);
   pointer-events: auto;
 }
 
@@ -271,14 +274,18 @@ body {
   list-style: none;
 }
 
-/* left/width are percentages of the 1440-wide bar; top/height of its 104
-   height — 30/104 and 43.083/104. */
+/* left/width keep the artboard's horizontal positions. Vertically each link
+   is centred in the bar rather than pinned to the artboard's 30px offset, so
+   the bar's height is free to change without moving the type off-centre.
+   Centred by arithmetic rather than a translate: a transform would make this
+   a stacking context, which would cut the halo below off from the backdrop
+   it is supposed to blend with and leave it a solid grey blob. */
 .nav__links li {
   position: absolute;
   left: var(--x);
   width: var(--w);
-  top: 28.846154%;
-  height: 41.425781%;
+  top: calc(50% - var(--nav-line) / 2);
+  height: var(--nav-line);
 }
 
 /* A halo behind each word, so the links stay readable wherever the nav
@@ -311,8 +318,8 @@ body {
 .nav__links a {
   position: relative;
   display: block;
-  font-size: calc(var(--type-label) / var(--artboard) * var(--nav-scale));
-  line-height: normal;
+  font-size: var(--nav-font);
+  line-height: 1.25; /* must match the 1.25 in --nav-line */
   color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
