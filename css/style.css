@@ -342,13 +342,15 @@ body {
   paint-order: stroke fill;
 }
 
+/* --type-scale is set on a section whose foreground has been scaled down to
+   fit a short window; the copy shrinks with the pieces it labels. */
 .caption,
 .m-notice,
 .m-smiley {
-  font-size: calc(var(--type-lg) / var(--artboard-w) * 100cqw);
+  font-size: calc(var(--type-lg) * var(--type-scale, 1) / var(--artboard-w) * 100cqw);
   line-height: normal;
   color: var(--ink);
-  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard-w) * 100cqw) currentColor;
+  -webkit-text-stroke: calc(var(--type-stroke) * var(--type-scale, 1) / var(--artboard-w) * 100cqw) currentColor;
   paint-order: stroke fill;
 }
 
