@@ -46,7 +46,8 @@ SPEC = {
 
     # Sustainability frame (1:8). None are rotated. As above, the box is the
     # rendered leaf, which for the hand-drawn frames overflows its crop window.
-    "sciillust":               ( 378.0,   378.0,  False, 88),
+    # The scientific-illustration card is assets/sciillust.gif, used as-is:
+    # it is animated, so it does not go through this pipeline.
     "invasive-pieces":         ( 431.0,   766.23, False, 88),
     "artwork-sci-frame":       (1420.90, 1010.15, False, 88),
     "artwork-invasive-frame":  (1434.90, 1021.31, False, 88),

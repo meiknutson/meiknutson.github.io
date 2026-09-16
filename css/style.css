@@ -196,19 +196,18 @@ body {
   pointer-events: auto;
 }
 
-/* The artboard nav sits on mix-blend-mode:hue, tinting the art magenta. That
-   cannot be reproduced here: a fixed element always creates a stacking
-   context, so it can never blend with the sections scrolling behind it. The
-   closest equivalents — a hue blend or backdrop-filter:hue-rotate — also
-   recolour whatever passes underneath, which is fine over background art but
-   wrecks the artwork on the project pages. So the band keeps the palette's
-   barely-pink white and stays colour-neutral about its backdrop. */
+/* Magenta glass, standing in for the artboard's mix-blend-mode:hue nav base.
+   The blend itself is impossible on a pinned nav — a fixed element always
+   creates a stacking context, so it can never blend with the sections
+   scrolling behind it. Translucency plus a backdrop blur gets the look
+   without backdrop-filter:hue-rotate, which reproduced the magenta but
+   recoloured the artwork passing underneath (it turned the red algae blue). */
 .nav__base {
   position: absolute;
   inset: 0;
-  background: rgba(255, 246, 254, 0.82);
-  -webkit-backdrop-filter: blur(7px);
-          backdrop-filter: blur(7px);
+  background: rgba(255, 0, 242, 0.13);
+  -webkit-backdrop-filter: blur(14px) saturate(1.45);
+          backdrop-filter: blur(14px) saturate(1.45);
 }
 
 .nav__links {
