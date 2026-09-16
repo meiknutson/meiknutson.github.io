@@ -21,8 +21,9 @@
   --canvas: #feffff;
   --accent: #ff00f2;
   --ink: #000;
-  --type-lg: 36.667; /* px, on whichever artboard is showing */
-  --type-stroke: 2;  /* px, same artboard units as --type-lg */
+  --type-lg: 36.667;    /* px, on whichever artboard is showing */
+  --type-label: 26;     /* piece labels and the nav, which match each other */
+  --type-stroke: 2;     /* px, same artboard units as --type-lg */
   --artboard: 1440;  /* the desktop artboard width, for the pinned nav */
 }
 
@@ -305,10 +306,12 @@ body {
 }
 
 /* Positioned, so the word paints above its own halo. */
+/* Same size as the piece labels, so the nav reads as part of the same
+   typographic system rather than looming over it. */
 .nav__links a {
   position: relative;
   display: block;
-  font-size: calc(var(--type-lg) / var(--artboard) * var(--nav-scale));
+  font-size: calc(var(--type-label) / var(--artboard) * var(--nav-scale));
   line-height: normal;
   color: var(--ink);
   text-decoration: none;
@@ -357,6 +360,22 @@ body {
 .caption,
 .m-notice {
   word-break: break-word;
+}
+
+/* Labels under the portfolio pieces. Unlike the body copy these do not scale
+   with their section, so every label on the site is the same size and the nav
+   can match them. That means the artboard's box no longer fits the text, so
+   they size to their own content from the same top-left anchor. Multi-line
+   labels use an explicit <br>. */
+.label {
+  width: max-content;
+  height: auto;
+  font-size: calc(var(--type-label) / var(--artboard-w) * 100cqw);
+  line-height: normal;
+  color: var(--ink);
+  white-space: nowrap;
+  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard-w) * 100cqw) currentColor;
+  paint-order: stroke fill;
 }
 
 .m-smiley {
