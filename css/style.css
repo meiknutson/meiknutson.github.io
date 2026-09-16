@@ -131,6 +131,13 @@ body {
   isolation: isolate;
 }
 
+/* About is the last section; cropping it short of the artboard's 1024 drops
+   the dead space that otherwise ends the page. Its layers are written as
+   percentages of this height, so nothing inside shifts. */
+#about {
+  --artboard-h: 670;
+}
+
 /* Full-bleed on phones — no max-width, so the notice fills the screen. */
 .stage--mobile {
   --artboard-w: 402;
