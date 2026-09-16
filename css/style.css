@@ -23,7 +23,7 @@
   --ink: #000;
   --type-lg: 36.667;    /* px, on whichever artboard is showing */
   --type-label: 26;     /* piece labels and the nav, which match each other */
-  --type-stroke: 2;     /* px, same artboard units as --type-lg */
+  --type-stroke: 1;     /* px, same artboard units as --type-lg */
   --artboard: 1440;  /* the desktop artboard width, for the pinned nav */
 }
 
@@ -368,8 +368,14 @@ body {
    they size to their own content from the same top-left anchor. Multi-line
    labels use an explicit <br>. */
 .label {
+  /* Centred on --cx, the centre of the piece it names, rather than anchored
+     to the artboard's text box — which was sized for type more than twice
+     this large and left the labels sitting well off to one side. */
+  left: var(--cx);
+  transform: translateX(-50%);
   width: max-content;
   height: auto;
+  text-align: center;
   font-size: calc(var(--type-label) / var(--artboard-w) * 100cqw);
   line-height: normal;
   color: var(--ink);
