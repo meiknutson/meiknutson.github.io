@@ -1,0 +1,20 @@
+# This folder holds the site alongside a lot of large source media (Procreate
+# files, video, raw exports) that must not go into git — two of them are over
+# GitHub's 100MB per-file limit. So this is an allowlist: everything at the
+# root is ignored, and only the site is added back.
+
+/*
+
+!/index.html
+!/css/
+!/assets/
+!/tools/
+!/README.md
+!/.gitignore
+
+# Figma masters. Re-exportable from Figma, and only needed locally to run
+# tools/process-assets.py — the built assets/*.webp are committed, so the
+# site builds and serves without them.
+/assets/source/
+
+.DS_Store

@@ -1,0 +1,244 @@
+/* Mei Knutson — Portfolio
+   Home screen, from Figma "Portfolio-website":
+     node 1:3      desktop  1440x1024
+     node 113:398  mobile    402x874   ("under construction" notice)
+
+   Each artboard is reproduced as a fixed-ratio stage. Layer geometry lives in
+   the HTML as --x/--y/--w/--h percentages of that stage, so this file stays
+   generic and the coordinate table stays readable next to the markup it
+   describes. Both stages reuse the same .layer primitives.
+
+   The exported art is stored pre-transposed: Figma wraps each image in
+   rotate(90deg) scaleY(-1), which composes to a reflection across the main
+   diagonal. That is baked into the .webp files, so nothing here needs a
+   transform and the alpha mask lines up in plain page coordinates. */
+
+:root {
+  --canvas: #feffff;
+  --accent: #ff00f2;
+  --ink: #000;
+  --type-lg: 36.667; /* px, on whichever artboard is showing */
+  --type-stroke: 2;  /* px, same artboard units as --type-lg */
+}
+
+/* Outline around the type, echoing the hand-lettered wordmark. The stroke uses
+   currentColor so every item gains the same weight — the magenta current link
+   gets a magenta stroke rather than a black outline — and it follows the hover
+   colour for free. paint-order puts the stroke behind the fill so the counters
+   stay open instead of the stroke eating inward from both sides. */
+.nav__links a,
+.m-notice,
+.m-smiley {
+  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard-w) * 100cqw) currentColor;
+  paint-order: stroke fill;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--canvas);
+}
+
+body {
+  font-family: "42dot Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Stages ------------------------------------------------------------- */
+
+.stage {
+  --artboard-w: 1440;
+  --artboard-h: 1024;
+
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  aspect-ratio: var(--artboard-w) / var(--artboard-h);
+  overflow: hidden;
+  background: var(--canvas);
+
+  /* Gives descendants cqw/cqh units, and confines the blend modes below so
+     they composite against the canvas rather than whatever is behind. */
+  container-type: size;
+  container-name: stage;
+  isolation: isolate;
+}
+
+.stage--desktop {
+  max-width: calc(var(--artboard-w) * 1px);
+}
+
+/* Full-bleed on phones — no max-width, so the notice fills the screen. */
+.stage--mobile {
+  --artboard-w: 402;
+  --artboard-h: 874;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .stage--desktop { display: none; }
+  .stage--mobile { display: block; }
+}
+
+/* --- Layers ------------------------------------------------------------- */
+
+.hero {
+  position: absolute;
+  inset: 0;
+}
+
+.layer {
+  position: absolute;
+  left: var(--x, 0);
+  top: var(--y, 0);
+  width: var(--w, auto);
+  height: var(--h, auto);
+  margin: 0;
+  opacity: var(--opacity, 1);
+  mix-blend-mode: var(--blend, normal);
+}
+
+.layer > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Figma clip group: one shared alpha mask over two painted layers. Sized to
+   the box with no repeat, so anything outside the box is masked away too —
+   which is what makes the offset wash below crop correctly. Both artboards
+   place the mask box identically relative to its contents, so one rule serves
+   them both. */
+.layer--masked {
+  -webkit-mask-image: url("../assets/teal-mask.webp");
+          mask-image: url("../assets/teal-mask.webp");
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          mask-mode: alpha;
+}
+
+/* The wash is a larger image peeking through the mask, offset relative to it. */
+.layer--wash > img {
+  position: absolute;
+  left: -67.7063%;
+  top: -3.9614%;
+  width: 243.3628%;
+  height: 103.9614%;
+}
+
+/* --- Desktop nav -------------------------------------------------------- */
+
+.nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 10.15625%; /* 104 / 1024 */
+}
+
+/* Magenta bar on hue blend: invisible over the white canvas, tints the art. */
+.nav__base {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  mix-blend-mode: hue;
+}
+
+.nav__links {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* left/width are percentages of the nav, which spans the full artboard width.
+   top/height use cqh so they resolve against the stage height rather than the
+   104px-tall nav. */
+.nav__links li {
+  position: absolute;
+  left: var(--x);
+  top: 2.929688cqh;  /* 30 / 1024 */
+  width: var(--w);
+  height: 4.207373cqh; /* 43.083 / 1024 */
+}
+
+.nav__links a {
+  display: block;
+  font-size: calc(var(--type-lg) / var(--artboard-w) * 100cqw);
+  line-height: normal;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.nav__links a.is-current,
+.nav__links a:hover,
+.nav__links a:focus-visible {
+  color: var(--accent);
+}
+
+.nav__links a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav__links a { transition: color 120ms ease; }
+}
+
+/* --- Mobile notice ------------------------------------------------------ */
+
+/* The SVG carries its own blur bleed, so it is stretched to the given box. */
+.m-ellipse {
+  display: block;
+  object-fit: fill;
+}
+
+.m-artwork {
+  overflow: hidden;
+}
+
+.m-artwork > img {
+  position: absolute;
+  left: -64.96%;
+  top: -9.57%;
+  width: 226.1%;
+  height: 114.42%;
+  object-fit: fill;
+}
+
+.m-notice,
+.m-smiley {
+  font-size: calc(var(--type-lg) / var(--artboard-w) * 100cqw);
+  line-height: normal;
+  color: var(--ink);
+}
+
+.m-notice {
+  word-break: break-word;
+}
+
+.m-smiley {
+  white-space: nowrap;
+}

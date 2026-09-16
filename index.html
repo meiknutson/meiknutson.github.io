@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mei Knutson — Portfolio</title>
+<meta name="description" content="Portfolio of Mei Knutson.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=42dot+Sans:wght@400&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!--
+  Two artboards from the Figma file, one shown at a time:
+    .stage--desktop  node 1:3      1440x1024
+    .stage--mobile   node 113:398   402x874
+  Both are stacks of painted layers composited with blend modes. Every layer is
+  placed as a percentage of its own artboard, so each composition scales as one
+  piece. Coordinates read: --x/--y = top-left, --w/--h = size.
+  The two frames share ten of their twelve assets, at different offsets.
+-->
+
+<div class="stage stage--desktop">
+
+  <div class="hero">
+
+    <div class="layer" style="--x:0%; --y:2.09404%; --w:99.97556%; --h:97.90596%; --blend:hard-light">
+      <img src="assets/ulva.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:8.59375%; --y:0%; --w:85.83986%; --h:96.15518%; --blend:multiply">
+      <img src="assets/blob2.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:7.37306%; --y:3.98213%; --w:69.58007%; --h:88.01924%; --blend:color-burn; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:24.09722%; --y:56.54297%; --w:65.90278%; --h:61.13281%">
+      <img src="assets/white.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:34.22852%; --y:5.42396%; --w:21.94824%; --h:93.64916%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+
+    <!-- Two layers share one alpha mask, kept as separate masked boxes so each
+         keeps its own blend mode against the art underneath. -->
+    <div class="layer layer--masked" style="--x:33.10547%; --y:3.81050%; --w:24.26758%; --h:96.18949%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer layer--masked layer--wash" style="--x:33.10547%; --y:3.81050%; --w:24.26758%; --h:96.18949%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:17.23633%; --y:10.36732%; --w:79.66309%; --h:76.51905%; --blend:multiply; --opacity:.36">
+      <img src="assets/dots-a.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:16.72363%; --y:10.19567%; --w:80.76172%; --h:76.89667%; --blend:multiply; --opacity:.36">
+      <img src="assets/dots-b.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:39.94141%; --y:62.23824%; --w:41.40625%; --h:11.01957%; --blend:multiply; --opacity:.46">
+      <img src="assets/portfolio-pill.webp" alt="" decoding="async">
+    </div>
+
+    <p class="layer" style="--x:42.62695%; --y:64.05767%; --w:36.52344%; --h:8.78819%">
+      <img src="assets/portfolio-word.webp" alt="Portfolio" decoding="async">
+    </p>
+
+    <h1 class="layer" style="--x:-1.45833%; --y:-1.46484%; --w:102.91667%; --h:102.92969%">
+      <img src="assets/name.webp" alt="Mei Knutson" fetchpriority="high" decoding="async">
+    </h1>
+
+  </div>
+
+  <nav class="nav" aria-label="Main">
+    <div class="nav__base" aria-hidden="true"></div>
+    <ul class="nav__links">
+      <li style="--x:10.76389%; --w:6.493056%"><a href="./" aria-current="page" class="is-current">home</a></li>
+      <li style="--x:26.66667%; --w:15.150463%"><a href="#">sustainability</a></li>
+      <li style="--x:50%;       --w:9.484953%"><a href="#">physical</a></li>
+      <li style="--x:67.98611%; --w:5.283565%"><a href="#">print</a></li>
+      <li style="--x:82.824069%;--w:6.620368%"><a href="#">about</a></li>
+    </ul>
+  </nav>
+
+</div>
+
+
+<!-- Mobile frame: the designed "under construction" notice. It has no nav by
+     design — the phone view is a dead end that points at the desktop site. -->
+<div class="stage stage--mobile">
+
+  <h1 class="visually-hidden">Mei Knutson — Portfolio</h1>
+
+  <div class="hero">
+
+    <div class="layer" style="--x:-162.68657%; --y:-16.53968%; --w:358.12139%; --h:114.70902%; --blend:hard-light">
+      <img src="assets/ulva.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-131.90299%; --y:-18.99314%; --w:307.48607%; --h:112.65778%; --blend:multiply">
+      <img src="assets/blob2.webp" alt="" fetchpriority="high" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-136.27562%; --y:-14.32755%; --w:249.24205%; --h:103.12551%; --blend:color-burn; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-76.36816%; --y:47.25400%; --w:236.06965%; --h:71.62471%">
+      <img src="assets/white.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-40.07696%; --y:-12.63828%; --w:78.62057%; --h:109.72167%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer layer--masked" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer layer--masked layer--wash" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-100.94450%; --y:-6.84653%; --w:285.36030%; --h:89.65161%; --blend:multiply; --opacity:.36">
+      <img src="assets/dots-a.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:-102.78102%; --y:-7.04763%; --w:289.29571%; --h:90.09404%; --blend:multiply; --opacity:.36">
+      <img src="assets/dots-b.webp" alt="" decoding="async">
+    </div>
+
+  </div>
+
+  <!-- Blurred white ellipse behind the copy. Placed at its expanded box: the
+       SVG is 817x1055 because the Gaussian blur bleeds past the 417x655 shape. -->
+  <img class="layer m-ellipse" style="--x:-51.73960%; --y:-12.23930%; --w:203.23383%; --h:120.71053%"
+       src="assets/ellipse.svg" alt="" decoding="async">
+
+  <!-- Hand-drawn frame, cropped by its window. -->
+  <div class="layer m-artwork" style="--x:-3.73134%; --y:13.38673%; --w:107.46269%; --h:69.45080%">
+    <img src="assets/artwork-frame.webp" alt="" decoding="async">
+  </div>
+
+  <p class="layer m-notice" style="--x:19.90050%; --y:24.82838%; --w:68.15920%; --h:41.30435%">
+    sorry, the mobile version of this website is still under construction! for best viewing, check it out on desktop
+  </p>
+
+  <p class="layer m-smiley" style="--x:55.97015%; --y:60.06865%" aria-hidden="true">☻</p>
+
+</div>
+
+</body>
+</html>
