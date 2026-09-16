@@ -1,14 +1,18 @@
 /* Mei Knutson — Portfolio
-   Home screen, from Figma "Portfolio-website":
-     node 1:3      desktop  1440x1024
-     node 113:398  mobile    402x874   ("under construction" notice)
+   A single scrolling page. Each Figma frame from "Portfolio-website" becomes
+   one full-width section, stacked top to bottom, with the nav pinned above
+   them:
 
-   Each artboard is reproduced as a fixed-ratio stage. Layer geometry lives in
-   the HTML as --x/--y/--w/--h percentages of that stage, so this file stays
-   generic and the coordinate table stays readable next to the markup it
-   describes. Both stages reuse the same .layer primitives.
+     #home            node 1:3      1440x1024
+     #sustainability  node 1:8      1440x1024
+     mobile notice    node 113:398   402x874   (replaces the site below 768px)
 
-   The exported art is stored pre-transposed: Figma wraps each image in
+   Layer geometry lives in the HTML as --x/--y/--w/--h percentages of the
+   section's artboard, so this file stays generic and the coordinate table
+   stays readable next to the markup it describes. Cropped layers add
+   --ix/--iy/--iw/--ih to place the image inside its window.
+
+   Most art is stored pre-transposed: Figma wraps those images in
    rotate(90deg) scaleY(-1), which composes to a reflection across the main
    diagonal. That is baked into the .webp files, so nothing here needs a
    transform and the alpha mask lines up in plain page coordinates. */
@@ -19,21 +23,14 @@
   --ink: #000;
   --type-lg: 36.667; /* px, on whichever artboard is showing */
   --type-stroke: 2;  /* px, same artboard units as --type-lg */
-}
-
-/* Outline around the type, echoing the hand-lettered wordmark. The stroke uses
-   currentColor so every item gains the same weight — the magenta current link
-   gets a magenta stroke rather than a black outline — and it follows the hover
-   colour for free. paint-order puts the stroke behind the fill so the counters
-   stay open instead of the stroke eating inward from both sides. */
-.nav__links a,
-.m-notice,
-.m-smiley {
-  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard-w) * 100cqw) currentColor;
-  paint-order: stroke fill;
+  --artboard: 1440;  /* the desktop artboard width, for the pinned nav */
 }
 
 * { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
 
 html, body {
   margin: 0;
@@ -44,6 +41,10 @@ html, body {
 body {
   font-family: "42dot Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 .visually-hidden {
@@ -58,14 +59,30 @@ body {
   border: 0;
 }
 
-/* --- Stages ------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: #fff;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* --- Sections ----------------------------------------------------------- */
 
 .stage {
   --artboard-w: 1440;
   --artboard-h: 1024;
 
   position: relative;
+  display: block;
   width: 100%;
+  max-width: calc(var(--artboard-w) * 1px);
   margin-inline: auto;
   aspect-ratio: var(--artboard-w) / var(--artboard-h);
   overflow: hidden;
@@ -78,28 +95,20 @@ body {
   isolation: isolate;
 }
 
-.stage--desktop {
-  max-width: calc(var(--artboard-w) * 1px);
-}
-
 /* Full-bleed on phones — no max-width, so the notice fills the screen. */
 .stage--mobile {
   --artboard-w: 402;
   --artboard-h: 874;
+  max-width: none;
   display: none;
 }
 
 @media (max-width: 767px) {
-  .stage--desktop { display: none; }
+  .nav, .site { display: none; }
   .stage--mobile { display: block; }
 }
 
 /* --- Layers ------------------------------------------------------------- */
-
-.hero {
-  position: absolute;
-  inset: 0;
-}
 
 .layer {
   position: absolute;
@@ -119,6 +128,27 @@ body {
   max-width: none;
   object-fit: cover;
   pointer-events: none;
+}
+
+/* Some frames rotate a shared asset where another reflects it; the two differ
+   by a vertical flip. */
+.layer--flip-y > img {
+  transform: scaleY(-1);
+}
+
+/* A window that clips an image larger than itself. The image is positioned
+   with its own --ix/--iy/--iw/--ih, in percentages of the window. */
+.crop {
+  overflow: hidden;
+}
+
+.crop > img {
+  position: absolute;
+  left: var(--ix, 0);
+  top: var(--iy, 0);
+  width: var(--iw, 100%);
+  height: var(--ih, 100%);
+  object-fit: fill;
 }
 
 /* Figma clip group: one shared alpha mask over two painted layers. Sized to
@@ -145,22 +175,40 @@ body {
   height: 103.9614%;
 }
 
-/* --- Desktop nav -------------------------------------------------------- */
+/* --- Pinned nav --------------------------------------------------------- */
 
 .nav {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 10.15625%; /* 104 / 1024 */
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+
+  --nav-scale: min(100vw, calc(var(--artboard) * 1px));
 }
 
-/* Magenta bar on hue blend: invisible over the white canvas, tints the art. */
+.nav__frame {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--artboard) * 1px);
+  aspect-ratio: var(--artboard) / 104;
+  pointer-events: auto;
+}
+
+/* The artboard nav sits on mix-blend-mode:hue, tinting the art magenta. That
+   cannot be reproduced here: a fixed element always creates a stacking
+   context, so it can never blend with the sections scrolling behind it. The
+   closest equivalents — a hue blend or backdrop-filter:hue-rotate — also
+   recolour whatever passes underneath, which is fine over background art but
+   wrecks the artwork on the project pages. So the band keeps the palette's
+   barely-pink white and stays colour-neutral about its backdrop. */
 .nav__base {
   position: absolute;
   inset: 0;
-  background: var(--accent);
-  mix-blend-mode: hue;
+  background: rgba(255, 246, 254, 0.82);
+  -webkit-backdrop-filter: blur(7px);
+          backdrop-filter: blur(7px);
 }
 
 .nav__links {
@@ -171,25 +219,23 @@ body {
   list-style: none;
 }
 
-/* left/width are percentages of the nav, which spans the full artboard width.
-   top/height use cqh so they resolve against the stage height rather than the
-   104px-tall nav. */
+/* left/width are percentages of the 1440-wide bar; top/height of its 104
+   height — 30/104 and 43.083/104. */
 .nav__links li {
   position: absolute;
   left: var(--x);
-  top: 2.929688cqh;  /* 30 / 1024 */
   width: var(--w);
-  height: 4.207373cqh; /* 43.083 / 1024 */
+  top: 28.846154%;
+  height: 41.425781%;
 }
 
 .nav__links a {
   display: block;
-  font-size: calc(var(--type-lg) / var(--artboard-w) * 100cqw);
+  font-size: calc(var(--type-lg) / var(--artboard) * var(--nav-scale));
   line-height: normal;
   color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
-  word-break: break-word;
 }
 
 .nav__links a.is-current,
@@ -207,38 +253,64 @@ body {
   .nav__links a { transition: color 120ms ease; }
 }
 
-/* --- Mobile notice ------------------------------------------------------ */
+/* --- Type --------------------------------------------------------------- */
 
-/* The SVG carries its own blur bleed, so it is stretched to the given box. */
-.m-ellipse {
-  display: block;
-  object-fit: fill;
+/* Outline around the type, echoing the hand-lettered wordmark. The stroke uses
+   currentColor so every item gains the same weight — the magenta current link
+   gets a magenta stroke rather than a black outline — and it follows the hover
+   colour for free. paint-order puts the stroke behind the fill so the counters
+   stay open instead of the stroke eating inward from both sides. */
+.nav__links a {
+  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard) * var(--nav-scale)) currentColor;
+  paint-order: stroke fill;
 }
 
-.m-artwork {
-  overflow: hidden;
-}
-
-.m-artwork > img {
-  position: absolute;
-  left: -64.96%;
-  top: -9.57%;
-  width: 226.1%;
-  height: 114.42%;
-  object-fit: fill;
-}
-
+.caption,
 .m-notice,
 .m-smiley {
   font-size: calc(var(--type-lg) / var(--artboard-w) * 100cqw);
   line-height: normal;
   color: var(--ink);
+  -webkit-text-stroke: calc(var(--type-stroke) / var(--artboard-w) * 100cqw) currentColor;
+  paint-order: stroke fill;
 }
 
+.caption,
 .m-notice {
   word-break: break-word;
 }
 
 .m-smiley {
   white-space: nowrap;
+}
+
+/* --- Sustainability ----------------------------------------------------- */
+
+/* A second magenta band, offset from the nav and on soft-light. */
+.band-soft {
+  background: var(--accent);
+  mix-blend-mode: soft-light;
+}
+
+.card {
+  display: block;
+  border-radius: 2.083333cqw; /* 30 / 1440 */
+  overflow: hidden;
+}
+
+.card > img {
+  pointer-events: none;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* --- Mobile notice ------------------------------------------------------ */
+
+/* The SVG carries its own blur bleed, so it is stretched to the given box. */
+.m-ellipse {
+  display: block;
+  object-fit: fill;
 }

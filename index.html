@@ -13,19 +13,39 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <!--
-  Two artboards from the Figma file, one shown at a time:
-    .stage--desktop  node 1:3      1440x1024
-    .stage--mobile   node 113:398   402x874
-  Both are stacks of painted layers composited with blend modes. Every layer is
-  placed as a percentage of its own artboard, so each composition scales as one
-  piece. Coordinates read: --x/--y = top-left, --w/--h = size.
-  The two frames share ten of their twelve assets, at different offsets.
+  The nav is pinned outside the artboards now, so it stays put while the
+  sections scroll under it. Its geometry is still the Figma nav's: a
+  1440x104 bar, links at the same coordinates, expressed as percentages of
+  that bar.
 -->
+<header class="nav">
+  <div class="nav__frame">
+    <div class="nav__base" aria-hidden="true"></div>
+    <nav aria-label="Main">
+      <ul class="nav__links">
+        <li style="--x:10.76389%;  --w:6.493056%"><a href="#home" class="is-current" aria-current="page">home</a></li>
+        <li style="--x:26.66667%;  --w:15.150463%"><a href="#sustainability">sustainability</a></li>
+        <li style="--x:50%;        --w:9.484953%"><a href="#">physical</a></li>
+        <li style="--x:67.98611%;  --w:5.283565%"><a href="#">print</a></li>
+        <li style="--x:82.824069%; --w:6.620368%"><a href="#">about</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<div class="stage stage--desktop">
+<!--
+  Each Figma frame is one full-width section stacked top to bottom. Every
+  layer is placed as a percentage of its 1440x1024 artboard, so a section
+  scales as one piece. Coordinates read: --x/--y = top-left, --w/--h = size.
+  For cropped layers, --ix/--iy/--iw/--ih place the image inside its window.
+-->
+<main class="site" id="main">
 
-  <div class="hero">
+  <!-- ==================== Home — Figma node 1:3 ==================== -->
+  <section class="stage" id="home" aria-label="Home">
 
     <div class="layer" style="--x:0%; --y:2.09404%; --w:99.97556%; --h:97.90596%; --blend:hard-light">
       <img src="assets/ulva.webp" alt="" fetchpriority="high" decoding="async">
@@ -77,66 +97,96 @@
       <img src="assets/name.webp" alt="Mei Knutson" fetchpriority="high" decoding="async">
     </h1>
 
-  </div>
-
-  <nav class="nav" aria-label="Main">
-    <div class="nav__base" aria-hidden="true"></div>
-    <ul class="nav__links">
-      <li style="--x:10.76389%; --w:6.493056%"><a href="./" aria-current="page" class="is-current">home</a></li>
-      <li style="--x:26.66667%; --w:15.150463%"><a href="#">sustainability</a></li>
-      <li style="--x:50%;       --w:9.484953%"><a href="#">physical</a></li>
-      <li style="--x:67.98611%; --w:5.283565%"><a href="#">print</a></li>
-      <li style="--x:82.824069%;--w:6.620368%"><a href="#">about</a></li>
-    </ul>
-  </nav>
-
-</div>
+  </section>
 
 
-<!-- Mobile frame: the designed "under construction" notice. It has no nav by
-     design — the phone view is a dead end that points at the desktop site. -->
+  <!-- ================ Sustainability — Figma node 1:8 ================ -->
+  <section class="stage" id="sustainability" aria-labelledby="sustainability-heading">
+
+    <h2 class="visually-hidden" id="sustainability-heading">Sustainability</h2>
+
+    <!-- Same Ulva asset as the hero, but this frame rotates it rather than
+         reflecting it, so it is the vertical flip of the baked file. -->
+    <div class="layer layer--flip-y" style="--x:0%; --y:2.09404%; --w:99.97556%; --h:97.90596%; --blend:hard-light">
+      <img src="assets/ulva.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer band-soft" style="--x:1.805556%; --y:0%; --w:100%; --h:10.15625%"></div>
+
+    <a class="layer card" href="#" style="--x:17.291667%; --y:21.191406%; --w:26.25%; --h:36.914063%">
+      <img src="assets/sciillust.webp" alt="Scientific illustration: Red Algae of Monterey" decoding="async">
+    </a>
+
+    <a class="layer card crop" href="#" style="--x:53.125%; --y:35.15625%; --w:29.930556%; --h:42.089844%;
+                                               --ix:-0.12%; --iy:-0.07%; --iw:100%; --ih:177.78%">
+      <img src="assets/invasive-pieces.webp" alt="Invasive Pieces: jewellery made from sea urchin skeletons" decoding="async">
+    </a>
+
+    <!-- Hand-drawn frames sit above the photos they surround. -->
+    <div class="layer crop" style="--x:15.208333%; --y:16.992188%; --w:30.625%; --h:47.460938%;
+                                   --ix:-49.27%; --iy:-34.79%; --iw:322.2%; --ih:207.85%">
+      <img src="assets/artwork-sci-frame.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer crop" style="--x:49.027778%; --y:29.394531%; --w:38.194444%; --h:53.515625%;
+                                   --ix:-128.85%; --iy:-55.09%; --iw:260.89%; --ih:186.37%">
+      <img src="assets/artwork-invasive-frame.webp" alt="" decoding="async">
+    </div>
+
+    <p class="layer caption" style="--x:19.930556%; --y:61.914063%; --w:24.375%; --h:4.199219%">
+      scientific illustration<br>(click for gallery)
+    </p>
+
+    <p class="layer caption" style="--x:58.263889%; --y:79.492188%; --w:27.291667%; --h:4.980469%">
+      invasive pieces
+    </p>
+
+  </section>
+
+</main>
+
+
+<!-- Mobile frame — Figma node 113:398. The designed "under construction"
+     notice. It replaces the whole scrolling site below 768px, and has no nav
+     by design. -->
 <div class="stage stage--mobile">
 
   <h1 class="visually-hidden">Mei Knutson — Portfolio</h1>
 
-  <div class="hero">
+  <div class="layer" style="--x:-162.68657%; --y:-16.53968%; --w:358.12139%; --h:114.70902%; --blend:hard-light">
+    <img src="assets/ulva.webp" alt="" fetchpriority="high" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-162.68657%; --y:-16.53968%; --w:358.12139%; --h:114.70902%; --blend:hard-light">
-      <img src="assets/ulva.webp" alt="" fetchpriority="high" decoding="async">
-    </div>
+  <div class="layer" style="--x:-131.90299%; --y:-18.99314%; --w:307.48607%; --h:112.65778%; --blend:multiply">
+    <img src="assets/blob2.webp" alt="" fetchpriority="high" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-131.90299%; --y:-18.99314%; --w:307.48607%; --h:112.65778%; --blend:multiply">
-      <img src="assets/blob2.webp" alt="" fetchpriority="high" decoding="async">
-    </div>
+  <div class="layer" style="--x:-136.27562%; --y:-14.32755%; --w:249.24205%; --h:103.12551%; --blend:color-burn; --opacity:.58">
+    <img src="assets/plocamium.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-136.27562%; --y:-14.32755%; --w:249.24205%; --h:103.12551%; --blend:color-burn; --opacity:.58">
-      <img src="assets/plocamium.webp" alt="" decoding="async">
-    </div>
+  <div class="layer" style="--x:-76.36816%; --y:47.25400%; --w:236.06965%; --h:71.62471%">
+    <img src="assets/white.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-76.36816%; --y:47.25400%; --w:236.06965%; --h:71.62471%">
-      <img src="assets/white.webp" alt="" decoding="async">
-    </div>
+  <div class="layer" style="--x:-40.07696%; --y:-12.63828%; --w:78.62057%; --h:109.72167%; --blend:hard-light; --opacity:.34">
+    <img src="assets/teal-soft.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-40.07696%; --y:-12.63828%; --w:78.62057%; --h:109.72167%; --blend:hard-light; --opacity:.34">
-      <img src="assets/teal-soft.webp" alt="" decoding="async">
-    </div>
+  <div class="layer layer--masked" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%; --blend:hard-light; --opacity:.45">
+    <img src="assets/teal-fill.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer layer--masked" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%; --blend:hard-light; --opacity:.45">
-      <img src="assets/teal-fill.webp" alt="" decoding="async">
-    </div>
+  <div class="layer layer--masked layer--wash" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%">
+    <img src="assets/teal-wash.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer layer--masked layer--wash" style="--x:-44.09982%; --y:-14.52865%; --w:86.92864%; --h:112.69798%">
-      <img src="assets/teal-wash.webp" alt="" decoding="async">
-    </div>
+  <div class="layer" style="--x:-100.94450%; --y:-6.84653%; --w:285.36030%; --h:89.65161%; --blend:multiply; --opacity:.36">
+    <img src="assets/dots-a.webp" alt="" decoding="async">
+  </div>
 
-    <div class="layer" style="--x:-100.94450%; --y:-6.84653%; --w:285.36030%; --h:89.65161%; --blend:multiply; --opacity:.36">
-      <img src="assets/dots-a.webp" alt="" decoding="async">
-    </div>
-
-    <div class="layer" style="--x:-102.78102%; --y:-7.04763%; --w:289.29571%; --h:90.09404%; --blend:multiply; --opacity:.36">
-      <img src="assets/dots-b.webp" alt="" decoding="async">
-    </div>
-
+  <div class="layer" style="--x:-102.78102%; --y:-7.04763%; --w:289.29571%; --h:90.09404%; --blend:multiply; --opacity:.36">
+    <img src="assets/dots-b.webp" alt="" decoding="async">
   </div>
 
   <!-- Blurred white ellipse behind the copy. Placed at its expanded box: the
@@ -144,8 +194,8 @@
   <img class="layer m-ellipse" style="--x:-51.73960%; --y:-12.23930%; --w:203.23383%; --h:120.71053%"
        src="assets/ellipse.svg" alt="" decoding="async">
 
-  <!-- Hand-drawn frame, cropped by its window. -->
-  <div class="layer m-artwork" style="--x:-3.73134%; --y:13.38673%; --w:107.46269%; --h:69.45080%">
+  <div class="layer crop" style="--x:-3.73134%; --y:13.38673%; --w:107.46269%; --h:69.45080%;
+                                 --ix:-64.96%; --iy:-9.57%; --iw:226.1%; --ih:114.42%">
     <img src="assets/artwork-frame.webp" alt="" decoding="async">
   </div>
 
@@ -157,5 +207,6 @@
 
 </div>
 
+<script src="js/scrollspy.js" defer></script>
 </body>
 </html>

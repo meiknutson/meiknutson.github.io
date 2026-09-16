@@ -43,6 +43,13 @@ SPEC = {
     # Mobile frame (113:398) only. Figma does not rotate these; the box here is
     # the rendered leaf, which is larger than its crop window.
     "artwork-frame":  ( 976.752,   694.529, False, 88),
+
+    # Sustainability frame (1:8). None are rotated. As above, the box is the
+    # rendered leaf, which for the hand-drawn frames overflows its crop window.
+    "sciillust":               ( 378.0,   378.0,  False, 88),
+    "invasive-pieces":         ( 431.0,   766.23, False, 88),
+    "artwork-sci-frame":       (1420.90, 1010.15, False, 88),
+    "artwork-invasive-frame":  (1434.90, 1021.31, False, 88),
 }
 
 # assets/ellipse.svg is vector and copied straight from Figma — nothing to do.
