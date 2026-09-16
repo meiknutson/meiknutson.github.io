@@ -5,10 +5,11 @@
 (function () {
   "use strict";
 
+  var scroller = document.querySelector(".scroller");
   var sections = Array.prototype.slice.call(
-    document.querySelectorAll(".site > section[id]")
+    document.querySelectorAll(".scroller > section[id]")
   );
-  if (!sections.length || !("IntersectionObserver" in window)) return;
+  if (!scroller || !sections.length || !("IntersectionObserver" in window)) return;
 
   var links = {};
   Array.prototype.forEach.call(
@@ -37,7 +38,7 @@
         if (entry.isIntersecting) setCurrent(entry.target.id);
       });
     },
-    { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    { root: scroller, rootMargin: "-45% 0px -45% 0px", threshold: 0 }
   );
 
   sections.forEach(function (section) {

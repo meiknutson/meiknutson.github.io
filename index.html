@@ -16,33 +16,20 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!--
-  The nav is pinned outside the artboards now, so it stays put while the
-  sections scroll under it. Its geometry is still the Figma nav's: a
-  1440x104 bar, links at the same coordinates, expressed as percentages of
-  that bar.
--->
-<header class="nav">
-  <div class="nav__frame">
-    <div class="nav__base" aria-hidden="true"></div>
-    <nav aria-label="Main">
-      <ul class="nav__links">
-        <li style="--x:10.76389%;  --w:6.493056%"><a href="#home" class="is-current" aria-current="page">home</a></li>
-        <li style="--x:26.66667%;  --w:15.150463%"><a href="#sustainability">sustainability</a></li>
-        <li style="--x:50%;        --w:9.484953%"><a href="#">physical</a></li>
-        <li style="--x:67.98611%;  --w:5.283565%"><a href="#">print</a></li>
-        <li style="--x:82.824069%; --w:6.620368%"><a href="#">about</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<!--
   Each Figma frame is one full-width section stacked top to bottom. Every
   layer is placed as a percentage of its 1440x1024 artboard, so a section
   scales as one piece. Coordinates read: --x/--y = top-left, --w/--h = size.
   For cropped layers, --ix/--iy/--iw/--ih place the image inside its window.
 -->
-<main class="site" id="main">
+<!--
+  The sections scroll inside .scroller rather than the document. That is what
+  lets the nav keep the Figma hue blend: a fixed or sticky element always
+  creates a stacking context and so can never blend with what scrolls behind
+  it, but an absolutely positioned sibling of the scroll container can.
+-->
+<div class="shell">
+
+<main class="scroller" id="main">
 
   <!-- ==================== Home — Figma node 1:3 ==================== -->
   <section class="stage" id="home" aria-label="Home">
@@ -147,6 +134,31 @@
   </section>
 
 </main>
+
+<!--
+  The nav's geometry is still the Figma nav's: a 1440x104 bar with the links
+  at the same coordinates, as percentages of that bar. Two stacked layers —
+  a blur for the glass distortion, and the magenta hue blend over it. They
+  have to be separate elements: backdrop-filter would create a stacking
+  context and cut the blend off from the page.
+-->
+<header class="nav">
+  <div class="nav__frame">
+    <div class="nav__glass" aria-hidden="true"></div>
+    <div class="nav__hue" aria-hidden="true"></div>
+    <nav aria-label="Main">
+      <ul class="nav__links">
+        <li style="--x:10.76389%;  --w:6.493056%"><a href="#home" class="is-current" aria-current="page">home</a></li>
+        <li style="--x:26.66667%;  --w:15.150463%"><a href="#sustainability">sustainability</a></li>
+        <li style="--x:50%;        --w:9.484953%"><a href="#">physical</a></li>
+        <li style="--x:67.98611%;  --w:5.283565%"><a href="#">print</a></li>
+        <li style="--x:82.824069%; --w:6.620368%"><a href="#">about</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+</div><!-- /.shell -->
 
 
 <!-- Mobile frame — Figma node 113:398. The designed "under construction"

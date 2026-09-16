@@ -35,7 +35,32 @@ html {
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   background: var(--canvas);
+}
+
+/* --- Scroll shell -------------------------------------------------------
+   The sections scroll inside .scroller instead of the document, so the nav
+   can be an absolutely positioned sibling rather than a fixed one. Nothing
+   in this chain may create a stacking context, or the nav's hue blend would
+   be cut off from the sections behind it — so no z-index, no transform, no
+   filter on .shell, .scroller or .nav. */
+
+.shell {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.scroller {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroller { scroll-behavior: auto; }
 }
 
 body {
@@ -104,7 +129,8 @@ body {
 }
 
 @media (max-width: 767px) {
-  .nav, .site { display: none; }
+  html, body { height: auto; }
+  .shell { display: none; }
   .stage--mobile { display: block; }
 }
 
@@ -177,10 +203,13 @@ body {
 
 /* --- Pinned nav --------------------------------------------------------- */
 
+/* Absolute, not fixed — see the note on .shell. It still sits at the top of
+   the viewport because .shell is exactly viewport-height and does not scroll;
+   the content scrolls inside it. It paints above .scroller by DOM order, so
+   it must stay z-index:auto. */
 .nav {
-  position: fixed;
+  position: absolute;
   inset: 0 0 auto 0;
-  z-index: 10;
   display: flex;
   justify-content: center;
   pointer-events: none;
@@ -196,18 +225,27 @@ body {
   pointer-events: auto;
 }
 
-/* Magenta glass, standing in for the artboard's mix-blend-mode:hue nav base.
-   The blend itself is impossible on a pinned nav — a fixed element always
-   creates a stacking context, so it can never blend with the sections
-   scrolling behind it. Translucency plus a backdrop blur gets the look
-   without backdrop-filter:hue-rotate, which reproduced the magenta but
-   recoloured the artwork passing underneath (it turned the red algae blue). */
-.nav__base {
+/* Two layers make the glass, and they cannot be one element: backdrop-filter
+   creates a stacking context, which would cut the hue blend off from the
+   page.
+
+   The blur only distorts — it adds no colour and no opacity wash, so the art
+   stays fully visible through it, just softened. */
+.nav__glass {
   position: absolute;
   inset: 0;
-  background: rgba(255, 0, 242, 0.13);
-  -webkit-backdrop-filter: blur(14px) saturate(1.45);
-          backdrop-filter: blur(14px) saturate(1.45);
+  -webkit-backdrop-filter: blur(9px);
+          backdrop-filter: blur(9px);
+}
+
+/* The artboard's nav base, unchanged: magenta on a hue blend. It takes the
+   hue of magenta and keeps the backdrop's saturation and lightness, so white
+   stays white and the art keeps all its detail. */
+.nav__hue {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  mix-blend-mode: hue;
 }
 
 .nav__links {
@@ -228,7 +266,26 @@ body {
   height: 41.425781%;
 }
 
+/* A soft white halo behind each word, so the links stay readable wherever the
+   nav happens to be sitting — including over the dark artwork further down
+   the page. Sized off the word's own box and faded out well before its edge,
+   so on the pale upper sections it reads as nothing in particular. */
+.nav__links li::before {
+  content: "";
+  position: absolute;
+  inset: -70% -16%;
+  background: radial-gradient(
+    closest-side ellipse at 50% 50%,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.44) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Positioned, so the word paints above its own halo. */
 .nav__links a {
+  position: relative;
   display: block;
   font-size: calc(var(--type-lg) / var(--artboard) * var(--nav-scale));
   line-height: normal;
