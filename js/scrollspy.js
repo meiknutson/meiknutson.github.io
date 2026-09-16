@@ -9,7 +9,7 @@
   var sections = Array.prototype.slice.call(
     document.querySelectorAll(".scroller > section[id]")
   );
-  if (!scroller || !sections.length || !("IntersectionObserver" in window)) return;
+  if (!scroller || !sections.length) return;
 
   var links = {};
   Array.prototype.forEach.call(
@@ -20,7 +20,11 @@
     }
   );
 
+  var currentId = null;
+
   function setCurrent(id) {
+    if (id === currentId) return;
+    currentId = id;
     Object.keys(links).forEach(function (key) {
       var a = links[key];
       var on = key === id;
@@ -30,18 +34,36 @@
     });
   }
 
-  // A band across the middle of the viewport: the section crossing it wins,
-  // so the highlight flips at the halfway point rather than on first pixel.
-  var observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) setCurrent(entry.target.id);
-      });
-    },
-    { root: scroller, rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-  );
+  // Whichever section crosses the middle of the viewport wins, so the
+  // highlight flips at the halfway point rather than on first pixel.
+  // Derived from geometry on every frame rather than from observer
+  // callbacks: an IntersectionObserver reports its initial state before
+  // the sections have been laid out, which left the wrong link lit on load.
+  function update() {
+    var mid = scroller.clientHeight / 2;
+    var winner = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      var r = sections[i].getBoundingClientRect();
+      if (r.top <= mid && r.bottom > mid) {
+        winner = sections[i];
+        break;
+      }
+    }
+    if (winner) setCurrent(winner.id);
+  }
 
-  sections.forEach(function (section) {
-    observer.observe(section);
-  });
+  var queued = false;
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () {
+      queued = false;
+      update();
+    });
+  }
+
+  scroller.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  window.addEventListener("load", update);
+  update();
 })();

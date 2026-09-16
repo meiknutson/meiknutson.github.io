@@ -266,20 +266,27 @@ body {
   height: 41.425781%;
 }
 
-/* A soft white halo behind each word, so the links stay readable wherever the
-   nav happens to be sitting — including over the dark artwork further down
-   the page. Sized off the word's own box and faded out well before its edge,
-   so on the pale upper sections it reads as nothing in particular. */
+/* A halo behind each word, so the links stay readable wherever the nav
+   happens to be sitting — including over the dark artwork further down the
+   page.
+
+   mix-blend-mode:lighten makes it self-adjusting rather than a flat wash:
+   the result is per-channel max(backdrop, halo), so anything already
+   brighter than the halo colour is left completely alone and only darker
+   pixels get lifted. That is why the colour is a mid grey rather than white
+   — white would max out against everything and wash the pale upper sections
+   too. Dark artwork gets lifted hard; the hero gets essentially nothing. */
 .nav__links li::before {
   content: "";
   position: absolute;
-  inset: -70% -16%;
+  inset: -80% -18%;
   background: radial-gradient(
     closest-side ellipse at 50% 50%,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(255, 255, 255, 0.44) 45%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(157, 153, 162, 0.95) 0%,
+    rgba(157, 153, 162, 0.78) 45%,
+    rgba(157, 153, 162, 0) 100%
   );
+  mix-blend-mode: lighten;
   pointer-events: none;
 }
 
