@@ -98,6 +98,15 @@ body {
   left: 0;
 }
 
+/* Holds the nav's refraction filter. Kept in the layout rather than
+   display:none so the filter reference stays resolvable. */
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 /* --- Sections ----------------------------------------------------------- */
 
 .stage {
@@ -246,8 +255,11 @@ body {
 .nav__glass {
   position: absolute;
   inset: 0;
-  -webkit-backdrop-filter: blur(9px) hue-rotate(218deg) saturate(1.1);
-          backdrop-filter: blur(9px) hue-rotate(218deg) saturate(1.1);
+  /* Light blur so the art stays legible through the pane, then the SVG
+     refraction, then the colour shift. Safari ignores url() in
+     backdrop-filter and falls back to blur + hue on their own. */
+  -webkit-backdrop-filter: blur(4px) hue-rotate(218deg) saturate(1.1);
+          backdrop-filter: blur(4px) url(#glass-distort) hue-rotate(218deg) saturate(1.1);
 }
 
 .nav__links {

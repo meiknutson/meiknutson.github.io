@@ -16,6 +16,23 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!--
+  Refraction for the nav glass. Fractal noise, softened, then used to push the
+  backdrop's pixels around — which is what makes it read as an uneven pane
+  rather than a flat blur. Referenced from .nav__glass's backdrop-filter.
+-->
+<svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="glass-distort" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.017" numOctaves="2" seed="11" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="1.6" result="softNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="9"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<!--
   Each Figma frame is one full-width section stacked top to bottom. Every
   layer is placed as a percentage of its 1440x1024 artboard, so a section
   scales as one piece. Coordinates read: --x/--y = top-left, --w/--h = size.
