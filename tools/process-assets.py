@@ -51,6 +51,17 @@ SPEC = {
     "invasive-pieces":         ( 431.0,   766.23, False, 88),
     "artwork-sci-frame":       (1420.90, 1010.15, False, 88),
     "artwork-invasive-frame":  (1434.90, 1021.31, False, 88),
+
+    # Physical frame (1:6). A second alpha mask, a different shape from the
+    # one the home and sustainability clip groups share.
+    "teal-mask-b":             ( 321.0,   976.0,  True,  70),
+
+    # Print frame (1:10). The mint and daily cards use the animated GIFs in
+    # the project root, so only the fronds cover comes from Figma.
+    "fronds-cover":            ( 340.0,   436.22, False, 88),
+
+    # About frame (1:14).
+    "portrait":                ( 997.65, 1328.44, False, 88),
 }
 
 # assets/ellipse.svg is vector and copied straight from Figma — nothing to do.

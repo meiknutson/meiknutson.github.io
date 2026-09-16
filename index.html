@@ -133,6 +133,202 @@
 
   </section>
 
+
+  <!-- ==================== Physical — Figma node 1:6 ==================== -->
+  <section class="stage" id="physical" aria-labelledby="physical-heading">
+
+    <h2 class="visually-hidden" id="physical-heading">Physical design</h2>
+
+    <!-- Four teal-dot columns, each a soft layer plus a masked pair sharing
+         one alpha mask. Columns 2 and 4 are rotated the other way round in
+         Figma, which against the pre-transposed assets is a horizontal flip.
+         Flipping the masked layer rather than its image mirrors the mask
+         along with its contents, which is what keeps the offset wash placed
+         correctly — so the shared --wash offsets need no variant. -->
+
+    <div class="layer" style="--x:6.448611%; --y:3.942383%; --w:20.161181%; --h:92.795313%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b" style="--x:5.416667%; --y:2.34375%; --w:22.291667%; --h:95.3125%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--wash" style="--x:5.416667%; --y:2.34375%; --w:22.291667%; --h:95.3125%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer layer--flip-x" style="--x:28.806944%; --y:4.918945%; --w:20.161181%; --h:92.795313%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--flip-x" style="--x:27.708333%; --y:3.320313%; --w:22.291667%; --h:95.3125%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--wash layer--flip-x" style="--x:27.708333%; --y:3.320313%; --w:22.291667%; --h:95.3125%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:51.031944%; --y:5.504883%; --w:20.161181%; --h:92.795313%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b" style="--x:50%; --y:3.90625%; --w:22.291667%; --h:95.3125%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--wash" style="--x:50%; --y:3.90625%; --w:22.291667%; --h:95.3125%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer layer--flip-x" style="--x:72.279167%; --y:4.918945%; --w:20.161181%; --h:92.795313%; --blend:hard-light; --opacity:.34">
+      <img src="assets/teal-soft.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--flip-x" style="--x:71.180556%; --y:3.320313%; --w:22.291667%; --h:95.3125%; --blend:hard-light; --opacity:.45">
+      <img src="assets/teal-fill.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--masked mask-b layer--wash layer--flip-x" style="--x:71.180556%; --y:3.320313%; --w:22.291667%; --h:95.3125%">
+      <img src="assets/teal-wash.webp" alt="" decoding="async">
+    </div>
+
+    <p class="layer caption" style="--x:41.041667%; --y:90.136719%; --w:20.069444%; --h:4.199219%">
+      skier automaton
+    </p>
+
+    <!-- This layer is a video fill in Figma, so it exports as an empty box —
+         the source is IMG_9548.mov, transcoded. preload="none" keeps 9MB off
+         the initial page load; js/scrollspy.js starts it near view. -->
+    <a class="layer card" href="#" style="--x:34.861111%; --y:12.890625%; --w:32.291667%; --h:74.804688%">
+      <video src="assets/skier-automaton.mp4" poster="assets/skier-poster.webp"
+             muted loop playsinline preload="none" data-autoplay-in-view
+             aria-label="Skier automaton: a hand-built kinetic model of a ski slope"></video>
+    </a>
+
+    <div class="layer crop" style="--x:28.541667%; --y:8.691406%; --w:43.75%; --h:86.425781%;
+                                   --ix:-64.96%; --iy:-9.57%; --iw:226.1%; --ih:114.42%">
+      <img src="assets/artwork-frame.webp" alt="" decoding="async">
+    </div>
+
+  </section>
+
+
+  <!-- ===================== Print — Figma node 1:10 ===================== -->
+  <section class="stage" id="print" aria-labelledby="print-heading">
+
+    <h2 class="visually-hidden" id="print-heading">Print design</h2>
+
+    <!-- Three dot fields. The first is hard-light, the other two exclusion,
+         which is what gives this page its green-on-magenta speckle. -->
+    <div class="layer" style="--x:6.346029%; --y:5.640394%; --w:79.663056%; --h:76.519043%; --blend:hard-light; --opacity:.36">
+      <img src="assets/dots-a.webp" alt="" decoding="async">
+    </div>
+    <div class="layer" style="--x:5.833333%; --y:5.46875%; --w:80.761736%; --h:76.896680%; --blend:hard-light; --opacity:.36">
+      <img src="assets/dots-b.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:15.582140%; --y:19.703871%; --w:79.663056%; --h:76.519043%; --blend:exclusion; --opacity:.36">
+      <img src="assets/dots-a.webp" alt="" decoding="async">
+    </div>
+    <div class="layer" style="--x:15.069444%; --y:19.53125%; --w:80.761736%; --h:76.896680%; --blend:exclusion; --opacity:.36">
+      <img src="assets/dots-b.webp" alt="" decoding="async">
+    </div>
+
+    <div class="layer" style="--x:15.026584%; --y:25.073988%; --w:79.663056%; --h:76.519043%; --blend:exclusion; --opacity:.36">
+      <img src="assets/dots-a.webp" alt="" decoding="async">
+    </div>
+    <div class="layer" style="--x:14.513889%; --y:24.902344%; --w:80.761736%; --h:76.896680%; --blend:exclusion; --opacity:.36">
+      <img src="assets/dots-b.webp" alt="" decoding="async">
+    </div>
+
+    <p class="layer caption" style="--x:64.027778%; --y:68.457031%; --w:20.069444%; --h:4.199219%">
+      the stanford daily
+    </p>
+    <p class="layer caption" style="--x:9.305556%; --y:53.417969%; --w:20.069444%; --h:4.199219%">
+      mint magazine
+    </p>
+
+    <!-- The mint and daily covers are the animated GIFs from the mockup. -->
+    <a class="layer card" href="#" style="--x:57.847222%; --y:19.53125%; --w:32.430556%; --h:45.605469%">
+      <img src="assets/dailygfxreal.gif" alt="The Stanford Daily: 'Text and the City' illustration" decoding="async">
+    </a>
+    <div class="layer crop" style="--x:55.416667%; --y:14.160156%; --w:37.708333%; --h:58.496094%;
+                                   --ix:-49.27%; --iy:-34.79%; --iw:322.2%; --ih:207.85%">
+      <img src="assets/artwork-sci-frame.webp" alt="" decoding="async">
+    </div>
+
+    <a class="layer card" href="#" style="--x:9.444444%; --y:11.914063%; --w:27.361111%; --h:38.476563%">
+      <img src="assets/mintmag.gif" alt="Mint Magazine: 'all the spaces in between' spread" decoding="async">
+    </a>
+    <div class="layer crop" style="--x:5.069444%; --y:5.46875%; --w:35%; --h:49.023438%;
+                                   --ix:-127.29%; --iy:-54.04%; --iw:260.89%; --ih:186.37%">
+      <img src="assets/artwork-invasive-frame.webp" alt="" decoding="async">
+    </div>
+
+    <p class="layer caption" style="--x:34.097222%; --y:92.773438%; --w:30.277778%; --h:6.054688%">
+      fronds litmag
+    </p>
+    <a class="layer card crop" href="#" style="--x:29.375%; --y:56.835938%; --w:23.611111%; --h:33.203125%;
+                                               --ix:0%; --iy:-0.01%; --iw:100%; --ih:128.3%">
+      <img src="assets/fronds-cover.webp" alt="Fronds literary magazine cover" decoding="async">
+    </a>
+    <div class="layer crop layer--flip-x" style="--x:26.666667%; --y:51.953125%; --w:30%; --h:41.992188%;
+                                                 --ix:-127.29%; --iy:-54.04%; --iw:260.89%; --ih:186.37%">
+      <img src="assets/artwork-invasive-frame.webp" alt="" decoding="async">
+    </div>
+
+  </section>
+
+
+  <!-- ===================== About — Figma node 1:14 ===================== -->
+  <section class="stage" id="about" aria-labelledby="about-heading">
+
+    <h2 class="visually-hidden" id="about-heading">About</h2>
+
+    <!-- Four plocamium fronds framing the page; the right-hand pair is
+         rotated the other way, a horizontal flip against the baked asset. -->
+    <div class="layer" style="--x:-17.222222%; --y:46.875%; --w:69.580069%; --h:88.019238%; --blend:hard-light; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+    <div class="layer" style="--x:-17.222222%; --y:2.929688%; --w:69.580069%; --h:88.019238%; --blend:hard-light; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--flip-x" style="--x:47.5%; --y:2.929688%; --w:69.580069%; --h:88.019238%; --blend:hard-light; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+    <div class="layer layer--flip-x" style="--x:47.638889%; --y:46.582031%; --w:69.580069%; --h:88.019238%; --blend:hard-light; --opacity:.58">
+      <img src="assets/plocamium.webp" alt="" decoding="async">
+    </div>
+
+    <!-- Blurred ellipse behind the copy, placed at its expanded blur box. -->
+    <img class="layer m-ellipse" style="--x:-6.803472%; --y:-2.245117%; --w:73.259722%; --h:112.400391%"
+         src="assets/ellipse-about.svg" alt="" decoding="async">
+
+    <p class="layer caption" style="--x:10.138889%; --y:26.855469%; --w:36.736111%; --h:4.199219%">
+      sustainable designer/<br>design thinking ecologist
+    </p>
+
+    <p class="layer caption" style="--x:10.138889%; --y:64.257813%; --w:42.430556%; --h:20.800781%">
+      algae used in the design of this site:
+      <span class="sci-name">Plocamium pacificum</span>,
+      <span class="sci-name">Ulva lactuca</span>,
+      <span class="sci-name">Rhodymenia californica</span>
+    </p>
+
+    <blockquote class="layer caption caption--accent" style="--x:12.569444%; --y:41.308594%; --w:39.722222%; --h:13.964844%">
+      “in order to make progress, there is only nature, and the eye is turned through contact with her”
+    </blockquote>
+
+    <p class="layer caption caption--accent" style="--x:26.805556%; --y:55.273438%; --w:23.611111%; --h:3.417969%">
+      -paul cézanne
+    </p>
+
+    <div class="layer card crop" style="--x:55%; --y:25.292969%; --w:37.708333%; --h:53.90625%; --blend:darken;
+                                        --ix:-39.95%; --iy:-77.67%; --iw:183.73%; --ih:240.66%">
+      <img src="assets/portrait.webp" alt="Mei Knutson, photographed on the Monterey coast" decoding="async">
+    </div>
+
+    <div class="layer crop layer--flip-x" style="--x:51.527778%; --y:18.652344%; --w:44.652778%; --h:69.238281%;
+                                                 --ix:-49.27%; --iy:-34.79%; --iw:322.2%; --ih:207.85%">
+      <img src="assets/artwork-sci-frame.webp" alt="" decoding="async">
+    </div>
+
+  </section>
+
 </main>
 
 <!--
@@ -148,9 +344,9 @@
       <ul class="nav__links">
         <li style="--x:10.76389%;  --w:6.493056%"><a href="#home" class="is-current" aria-current="page">home</a></li>
         <li style="--x:26.66667%;  --w:15.150463%"><a href="#sustainability">sustainability</a></li>
-        <li style="--x:50%;        --w:9.484953%"><a href="#">physical</a></li>
-        <li style="--x:67.98611%;  --w:5.283565%"><a href="#">print</a></li>
-        <li style="--x:82.824069%; --w:6.620368%"><a href="#">about</a></li>
+        <li style="--x:50%;        --w:9.484953%"><a href="#physical">physical</a></li>
+        <li style="--x:67.98611%;  --w:5.283565%"><a href="#print">print</a></li>
+        <li style="--x:82.824069%; --w:6.620368%"><a href="#about">about</a></li>
       </ul>
     </nav>
   </div>

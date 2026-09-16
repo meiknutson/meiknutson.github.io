@@ -156,11 +156,13 @@ body {
   pointer-events: none;
 }
 
-/* Some frames rotate a shared asset where another reflects it; the two differ
-   by a vertical flip. */
-.layer--flip-y > img {
-  transform: scaleY(-1);
-}
+/* Frames reuse the same assets at different rotations. Against the baked,
+   pre-transposed files those come out as plain flips. Applied to the layer
+   rather than the image so a masked layer mirrors its mask along with its
+   contents — which is what keeps an offset child correctly placed without
+   needing mirrored offsets of its own. */
+.layer--flip-y { transform: scaleY(-1); }
+.layer--flip-x { transform: scaleX(-1); }
 
 /* A window that clips an image larger than itself. The image is positioned
    with its own --ix/--iy/--iw/--ih, in percentages of the window. */
@@ -182,9 +184,12 @@ body {
    which is what makes the offset wash below crop correctly. Both artboards
    place the mask box identically relative to its contents, so one rule serves
    them both. */
+.mask-a { --mask: url("../assets/teal-mask.webp"); }
+.mask-b { --mask: url("../assets/teal-mask-b.webp"); } /* physical's columns */
+
 .layer--masked {
-  -webkit-mask-image: url("../assets/teal-mask.webp");
-          mask-image: url("../assets/teal-mask.webp");
+  -webkit-mask-image: var(--mask, url("../assets/teal-mask.webp"));
+          mask-image: var(--mask, url("../assets/teal-mask.webp"));
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -358,8 +363,30 @@ body {
   overflow: hidden;
 }
 
-.card > img {
+.card > img,
+.card > video {
   pointer-events: none;
+}
+
+.card > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Species names in the About copy, per the artboard. */
+.sci-name {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+
+.caption--accent {
+  color: var(--accent);
+}
+
+blockquote.caption {
+  margin: 0;
 }
 
 .card:focus-visible {

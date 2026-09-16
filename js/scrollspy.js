@@ -62,6 +62,26 @@
     });
   }
 
+  // The physical section's video is by far the heaviest asset on the page,
+  // so it ships with preload="none" and only starts once it is near view.
+  var video = document.querySelector("video[data-autoplay-in-view]");
+  if (video && "IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            video.preload = "auto";
+            var playing = video.play();
+            if (playing && playing.catch) playing.catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { root: scroller, rootMargin: "300px 0px" }
+    ).observe(video);
+  }
+
   scroller.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   window.addEventListener("load", update);
