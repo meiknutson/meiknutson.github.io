@@ -137,15 +137,13 @@
 
 <!--
   The nav's geometry is still the Figma nav's: a 1440x104 bar with the links
-  at the same coordinates, as percentages of that bar. Two stacked layers —
-  a blur for the glass distortion, and the magenta hue blend over it. They
-  have to be separate elements: backdrop-filter would create a stacking
-  context and cut the blend off from the page.
+  at the same coordinates, as percentages of that bar. The glass is a single
+  backdrop-filter layer — see the note in the stylesheet on why it rotates
+  hues rather than using the artboard's hue blend.
 -->
 <header class="nav">
   <div class="nav__frame">
     <div class="nav__glass" aria-hidden="true"></div>
-    <div class="nav__hue" aria-hidden="true"></div>
     <nav aria-label="Main">
       <ul class="nav__links">
         <li style="--x:10.76389%;  --w:6.493056%"><a href="#home" class="is-current" aria-current="page">home</a></li>

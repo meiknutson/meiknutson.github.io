@@ -225,27 +225,24 @@ body {
   pointer-events: auto;
 }
 
-/* Two layers make the glass, and they cannot be one element: backdrop-filter
-   creates a stacking context, which would cut the hue blend off from the
-   page.
+/* The glass: blur for distortion, then a hue rotation for the colour.
 
-   The blur only distorts — it adds no colour and no opacity wash, so the art
-   stays fully visible through it, just softened. */
+   This is deliberately NOT the artboard's mix-blend-mode:hue. That blend
+   forces every pixel to a single hue, so it would flatten everything under
+   the nav to the same magenta. Rotating instead shifts each colour by a
+   fixed amount, which keeps the artwork's own hue relationships — and 218deg
+   happens to land the yellow-green background art on magenta (so the band
+   still reads as designed) while taking reds round to blue. The two cannot
+   be combined: the blend would overwrite the rotation.
+
+   Like the blend, this leaves whites and greys alone — they have no hue to
+   rotate — so the band still disappears over white. No opacity wash either,
+   so the art stays fully visible, just softened and shifted. */
 .nav__glass {
   position: absolute;
   inset: 0;
-  -webkit-backdrop-filter: blur(9px);
-          backdrop-filter: blur(9px);
-}
-
-/* The artboard's nav base, unchanged: magenta on a hue blend. It takes the
-   hue of magenta and keeps the backdrop's saturation and lightness, so white
-   stays white and the art keeps all its detail. */
-.nav__hue {
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  mix-blend-mode: hue;
+  -webkit-backdrop-filter: blur(9px) hue-rotate(218deg) saturate(1.1);
+          backdrop-filter: blur(9px) hue-rotate(218deg) saturate(1.1);
 }
 
 .nav__links {
