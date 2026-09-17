@@ -48,7 +48,7 @@ SPEC = {
     # rendered leaf, which for the hand-drawn frames overflows its crop window.
     # The scientific-illustration card is assets/sciillust.gif, used as-is:
     # it is animated, so it does not go through this pipeline.
-    "invasive-pieces":         ( 431.0,   766.23, False, 88),
+    "invasive-pieces":         ( 589.0,  1046.0,  False, 88),  # larger on its detail page
     "artwork-sci-frame":       (1420.90, 1010.15, False, 88),
     "artwork-invasive-frame":  (1434.90, 1021.31, False, 88),
 
@@ -58,7 +58,7 @@ SPEC = {
 
     # Print frame (1:10). The mint and daily cards use the animated GIFs in
     # the project root, so only the fronds cover comes from Figma.
-    "fronds-cover":            ( 340.0,   436.22, False, 88),
+    "fronds-cover":            ( 710.0,   919.0,  False, 88),  # larger on its detail page
 
     # About frame (1:14).
     "portrait":                ( 997.65, 1328.44, False, 88),
@@ -67,6 +67,29 @@ SPEC = {
     "fig-wasp":                ( 855.0,  1106.0,  False, 88),
     "red-algae":               (1124.0,   869.0,  False, 88),
     "kelp-poster":             (1134.0,   788.0,  False, 88),
+    "ulva-b":                  (1439.648, 1002.557, True, 88),
+    "ulva-c":                  (1440.0,   544.0,   True,  88),
+    "ip-prototype":            ( 563.302,  751.069, False, 88),
+    "ip-render":               ( 558.121,  439.778, False, 88),
+    "ip-poster":               ( 716.527,  408.496, False, 88),
+    "ip-detail":               ( 288.572,  305.057, False, 88),
+    "sk-a":                    ( 289.0,    409.0,  False, 88),
+    "sk-b":                    ( 290.0,    350.0,  False, 88),
+    "sk-c":                    ( 238.0,    320.0,  False, 88),
+    "sk-d":                    ( 238.0,    343.0,  False, 88),
+    "sk-e":                    ( 437.0,    583.14, False, 88),  # crop leaf, 200.39% tall
+    "sk-f":                    ( 265.53,   354.02, False, 88),  # crop leaf, 144.68% wide
+    "mint-1":                  (1205.0,   776.0,  False, 85),
+    "mint-2":                  (1219.0,   788.0,  False, 85),
+    "mint-3":                  (1232.0,   798.0,  False, 85),
+    "mint-4":                  (2478.0,   803.0,  False, 85),  # crop leaf, 200% wide
+    "daily-1":                 ( 590.0,   786.0,  False, 85),
+    "daily-2":                 ( 608.0,   786.0,  False, 85),
+    "daily-3":                 ( 835.0,   627.0,  False, 85),
+    "daily-4":                 ( 837.0,   628.0,  False, 85),
+    "daily-5":                 ( 839.0,   629.0,  False, 85),
+    "daily-6":                 ( 632.0,   479.0,  False, 85),
+    "daily-7":                 ( 636.0,   477.0,  False, 85),
 }
 
 # assets/ellipse.svg is vector and copied straight from Figma — nothing to do.

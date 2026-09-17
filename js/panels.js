@@ -24,12 +24,30 @@
     // The site behind must not scroll while a panel is over it.
     document.body.classList.add("has-panel");
     openPanel = panel;
-    var close = panel.querySelector(".panel__close");
-    if (close) close.focus();
+    playVideos(panel);
+    // Named closeBtn, not close: a `var close` here would hoist over the
+    // close() function above and break opening one panel from another.
+    var closeBtn = panel.querySelector(".panel__close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  // The videos ship preload="none" so a panel costs nothing until opened.
+  // Loading is async, so play() has to be retried once there is data.
+  function playVideos(panel) {
+    panel.querySelectorAll("video[data-panel-video]").forEach(function (v) {
+      v.preload = "auto";
+      var attempt = function () {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      attempt();
+      if (v.readyState < 3) v.addEventListener("canplay", attempt, { once: true });
+    });
   }
 
   function close() {
     if (!openPanel) return;
+    openPanel.querySelectorAll("video[data-panel-video]").forEach(function (v) { v.pause(); });
     openPanel.hidden = true;
     document.body.classList.remove("has-panel");
     openPanel = null;
