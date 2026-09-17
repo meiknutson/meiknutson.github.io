@@ -376,6 +376,16 @@ body {
   word-break: break-word;
 }
 
+/* About's copy is the only body text on the site. Left to scale with its
+   section it came out at 28.75px against the nav's 26, with a stroke thinned
+   to 1.1 against 1.4 — bigger and lighter at once, which read as a different
+   font. Pinning it to --type-label puts it on the same footing as the nav
+   and the piece labels. */
+#about .caption {
+  font-size: calc(var(--type-label) / var(--artboard-w) * 100cqw);
+  -webkit-text-stroke-width: calc(var(--type-stroke) / var(--artboard-w) * 100cqw);
+}
+
 /* Labels under the portfolio pieces. Unlike the body copy these do not scale
    with their section, so every label on the site is the same size and the nav
    can match them. That means the artboard's box no longer fits the text, so
