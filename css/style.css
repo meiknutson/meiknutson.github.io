@@ -599,6 +599,15 @@ blockquote.caption {
   outline-offset: 4px;
 }
 
+/* The hand-drawn frames are painted over the cards they surround, so they
+   were swallowing every click meant for the link underneath. They now open
+   the same panel themselves, which makes the whole framed piece — border and
+   photo alike — one target. The card's <a> still carries the keyboard and
+   screen-reader affordance. */
+.crop[data-panel] {
+  cursor: pointer;
+}
+
 /* --- Mobile notice ------------------------------------------------------ */
 
 /* The SVG carries its own blur bleed, so it is stretched to the given box. */
