@@ -480,14 +480,27 @@ body {
    Like the blend, this leaves whites and greys alone — they have no hue to
    rotate — so the band still disappears over white. No opacity wash either,
    so the art stays fully visible, just softened and shifted. */
+/* The glass proper: a light blur so the art stays legible through the pane,
+   then the colour shift. Nothing here is browser-specific, so the band
+   always renders. */
 .nav__glass {
   position: absolute;
   inset: 0;
-  /* Light blur so the art stays legible through the pane, then the SVG
-     refraction, then the colour shift. Safari ignores url() in
-     backdrop-filter and falls back to blur + hue on their own. */
   -webkit-backdrop-filter: blur(4px) hue-rotate(218deg) saturate(1.1);
-          backdrop-filter: blur(4px) url(#glass-distort) hue-rotate(218deg) saturate(1.1);
+          backdrop-filter: blur(4px) hue-rotate(218deg) saturate(1.1);
+}
+
+/* The refraction rides on its own layer. Only Chromium supports url() SVG
+   filters inside backdrop-filter; Firefox and Safari do not, and because an
+   unsupported value invalidates the whole declaration, keeping this on
+   .nav__glass took the blur and the hue down with it and left no band at
+   all. On its own layer the worst case is losing the distortion. */
+@supports (backdrop-filter: url(#glass-distort)) {
+  .nav__refract {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: url(#glass-distort);
+  }
 }
 
 .nav__links {

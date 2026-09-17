@@ -25,10 +25,13 @@
     document.body.classList.add("has-panel");
     openPanel = panel;
     playVideos(panel);
-    // Named closeBtn, not close: a `var close` here would hoist over the
-    // close() function above and break opening one panel from another.
-    var closeBtn = panel.querySelector(".panel__close");
-    if (closeBtn) closeBtn.focus();
+    // Focus the scroll container, not the close button. Focus has to move
+    // into the panel for the keyboard, but Firefox treats programmatic focus
+    // as :focus-visible where Chrome does not, so focusing the X drew a
+    // magenta outline square around it. The container takes no visible ring
+    // and keeps arrow-key scrolling; Tab still reaches the X.
+    var scroll = panel.querySelector(".panel__scroll");
+    if (scroll) scroll.focus({ preventScroll: true });
   }
 
   // The videos ship preload="none" so a panel costs nothing until opened.
@@ -82,8 +85,8 @@
   // Keep focus inside an open panel.
   document.addEventListener("focusin", function (e) {
     if (openPanel && !openPanel.contains(e.target)) {
-      var c = openPanel.querySelector(".panel__close");
-      if (c) c.focus();
+      var s = openPanel.querySelector(".panel__scroll");
+      if (s) s.focus({ preventScroll: true });
     }
   });
 
