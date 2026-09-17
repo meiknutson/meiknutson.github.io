@@ -213,15 +213,10 @@ body {
   isolation: isolate;
 }
 
-/* Background and content are both laid out on the full artboard, so every
-   layer inside keeps the coordinates Figma gave it. Only the content group
-   is scaled — that is what shrinks the pieces and the copy while leaving
-   the algae, dots and scrims at their designed size, full bleed.
-
-   The background is taller than the page it sits in and simply gets clipped,
-   which is what keeps it covering the full height at its own scale. */
-.panel__bg,
-.panel__content {
+/* The background is laid out on the full, unscaled artboard, so it keeps the
+   size Figma gave it. It is taller than the page it sits in and simply gets
+   clipped, which is what keeps it covering the full height at its own scale. */
+.panel__bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -229,9 +224,15 @@ body {
   height: calc(100cqw * var(--page-h) / var(--artboard));
 }
 
+/* The content fills the page, which is already --panel-zoom of the artboard
+   height — so its layers' vertical percentages come out scaled for free, and
+   only the horizontal ones are pre-scaled in the markup.
+
+   Deliberately no transform: that would make this a stacking context and cut
+   the arrow's colour-dodge off from the background behind it. */
 .panel__content {
-  transform: scale(var(--panel-zoom));
-  transform-origin: top center;
+  position: absolute;
+  inset: 0;
 }
 
 /* Placed against the centred artboard column rather than the viewport, so it
@@ -246,10 +247,11 @@ body {
   border: 0;
   background: none;
   cursor: pointer;
-  /* No mix-blend-mode here. The artboard puts the X on a blend, but applying
-     it to the element composites its whole 99x80 box, which showed up as a
-     faint square panel around the cross. The SVG keeps its own blend
-     internally, which renders the same solid magenta without the box. */
+  /* The artboard's blend. The square that used to appear around the cross
+     came from the SVG's own internal mix-blend-mode, which filled the
+     group's bounds; that has been stripped from the file, so blending the
+     element now only affects the ink. */
+  mix-blend-mode: color-dodge;
 }
 
 .panel__close > img {
@@ -260,10 +262,11 @@ body {
   margin-top: -16.46%;
 }
 
-/* Four of the pages put their X slightly higher and further left. */
+/* Four of the pages put their X slightly higher and on a different blend. */
 .panel__close--overlay {
   left: calc(50% - var(--panel-scale) / 2 + 64 / 1440 * var(--panel-scale));
   top: calc(50 / 1440 * var(--panel-scale));
+  mix-blend-mode: overlay;
 }
 
 .panel__close:focus-visible {
@@ -280,7 +283,10 @@ body {
    --fs carries the size rather than a named token. */
 .p-text {
   margin: 0;
-  font-size: calc(var(--fs, 36.667) / var(--artboard) * 100cqw);
+  /* Sizes here are already multiplied by --panel-zoom in the markup, which
+     is why the default is 26 (the artboard's 36.667) — the same size as the
+     nav and the piece labels. */
+  font-size: calc(var(--fs, 26) / var(--artboard) * 100cqw);
   line-height: normal;
   color: #fff;
   word-break: break-word;
@@ -291,7 +297,7 @@ body {
 /* The campaign video is an embed in the artboard, so it exports as an empty
    bordered box; kept as the artboard has it until there is a video to put in. */
 .p-embed {
-  border: calc(5 / var(--artboard) * 100cqw) solid #fff;
+  border: calc(5 * var(--panel-zoom) / var(--artboard) * 100cqw) solid #fff;
   background: rgba(0, 0, 0, 0.35);
 }
 
