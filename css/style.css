@@ -247,26 +247,41 @@ body {
   border: 0;
   background: none;
   cursor: pointer;
-  /* The artboard's blend. The square that used to appear around the cross
-     came from the SVG's own internal mix-blend-mode, which filled the
-     group's bounds; that has been stripped from the file, so blending the
-     element now only affects the ink. */
-  mix-blend-mode: color-dodge;
 }
 
-.panel__close > img {
-  display: block;
-  width: 100%;
-  /* The artwork overshoots its box upward, as in the artboard. */
-  height: 116.46%;
-  margin-top: -16.46%;
+/* The cross is drawn rather than loaded as an SVG, because the artboard puts
+   it on a blend and blending an <img> composites its whole box — which is
+   what drew a pale square around it. Drawn as two pills, the blended
+   element's box *is* the ink, so the blend only touches the cross.
+
+   The blend sits on this wrapper rather than on each bar, so the two do not
+   dodge each other where they cross. Geometry is the artboard's: two
+   26.34-thick round-capped strokes across a 99.32x93.17 box, the box sitting
+   13.17 above the button's top edge. */
+.panel__close__x {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: var(--x-blend, color-dodge);
 }
+
+.panel__close__x > span {
+  position: absolute;
+  left: 50%;
+  top: 38.36%;                        /* stroke midpoint, 43.86 - 13.17, over 80 */
+  width: 113.92%;                     /* 113.14 over 99.32, round caps included */
+  aspect-ratio: 113.1367 / 26.3438;
+  background: var(--accent);
+  border-radius: 9999px;
+}
+
+.panel__close__x > span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.panel__close__x > span:last-child  { transform: translate(-50%, -50%) rotate(-45deg); }
 
 /* Four of the pages put their X slightly higher and on a different blend. */
 .panel__close--overlay {
   left: calc(50% - var(--panel-scale) / 2 + 64 / 1440 * var(--panel-scale));
   top: calc(50 / 1440 * var(--panel-scale));
-  mix-blend-mode: overlay;
+  --x-blend: overlay;
 }
 
 .panel__close:focus-visible {
