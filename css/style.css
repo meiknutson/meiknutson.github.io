@@ -54,6 +54,12 @@ html, body {
   overflow: hidden;
 }
 
+/* While a detail panel is open the site behind it is inert — it keeps its
+   scroll position but must not respond to the wheel or to focus. */
+.has-panel .shell {
+  pointer-events: none;
+}
+
 .scroller {
   height: 100%;
   overflow-y: auto;
@@ -150,6 +156,84 @@ body {
   html, body { height: auto; }
   .shell { display: none; }
   .stage--mobile { display: block; }
+}
+
+/* --- Detail panels -------------------------------------------------------
+   Full-screen overlays opened from the picture frames. Each scrolls on its
+   own, so the site behind keeps its scroll position untouched, and each
+   close button is pinned to the overlay rather than to the page inside it —
+   that is what keeps it in the same spot however far you scroll. */
+
+.panel {
+  --panel-scale: min(100vw, calc(var(--artboard) * 1px));
+
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--canvas);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panel__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Stops a flick past the end of a panel from scrolling the site behind it. */
+  overscroll-behavior: contain;
+}
+
+.panel__scroll:focus {
+  outline: none;
+}
+
+/* The artboard: 1440 wide like the sections, --page-h tall. */
+.panel__page {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--artboard) * 1px);
+  margin-inline: auto;
+  aspect-ratio: var(--artboard) / var(--page-h);
+  overflow: hidden;
+  background: var(--canvas);
+  container-type: size;
+  isolation: isolate;
+}
+
+/* Placed against the centred artboard column rather than the viewport, so it
+   lands where the artboard puts it (88, 64) at any window width. */
+.panel__close {
+  position: absolute;
+  left: calc(50% - var(--panel-scale) / 2 + 88 / 1440 * var(--panel-scale));
+  top: calc(64 / 1440 * var(--panel-scale));
+  width: calc(99.319 / 1440 * var(--panel-scale));
+  height: calc(80 / 1440 * var(--panel-scale));
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  mix-blend-mode: color-dodge;
+}
+
+.panel__close > img {
+  display: block;
+  width: 100%;
+  /* The artwork overshoots its box upward, as in the artboard. */
+  height: 116.46%;
+  margin-top: -16.46%;
+}
+
+.panel__close:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 6px;
+}
+
+/* A flat wash over a whole panel page. */
+.shader {
+  background: #040404;
 }
 
 /* --- Layers ------------------------------------------------------------- */

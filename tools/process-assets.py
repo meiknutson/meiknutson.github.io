@@ -62,6 +62,11 @@ SPEC = {
 
     # About frame (1:14).
     "portrait":                ( 997.65, 1328.44, False, 88),
+
+    # Detail pages, opened from the picture frames. None are rotated.
+    "fig-wasp":                ( 855.0,  1106.0,  False, 88),
+    "red-algae":               (1124.0,   869.0,  False, 88),
+    "kelp-poster":             (1134.0,   788.0,  False, 88),
 }
 
 # assets/ellipse.svg is vector and copied straight from Figma — nothing to do.

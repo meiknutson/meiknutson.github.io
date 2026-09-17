@@ -118,7 +118,7 @@
     <div class="layer band-soft" style="--x:1.805556%; --y:0%; --w:100%; --h:10.15625%"></div>
 
     <!-- Animated GIF from the mockup: cycles three plates every 700ms. -->
-    <a class="layer card" href="#" style="--x:22.704012%; --y:11.191321%; --w:21.121563%; --h:29.702198%">
+    <a class="layer card" href="#panel-sciillust" data-panel="panel-sciillust" style="--x:22.704012%; --y:11.191321%; --w:21.121563%; --h:29.702198%">
       <img src="assets/sciillust.gif"
            alt="Scientific illustrations, cycling between Red Algae of Monterey, Fig-Wasp Mutualism, and Giant Kelp Ecomorphs of Monterey Bay"
            decoding="async">
@@ -370,6 +370,54 @@
 </header>
 
 </div><!-- /.shell -->
+
+
+<!--
+  Detail pages, opened from the picture frames. Each is a full-screen overlay
+  with its own scroll container, so the site behind keeps its position, and
+  each carries a close button pinned to the overlay rather than to the page
+  inside it — so it stays put however far you scroll.
+
+  A panel's artboard is 1440 wide like the sections, but much taller; --page-h
+  gives its height and every layer inside is a percentage of that.
+-->
+
+<!-- ============ Scientific illustration — Figma node 62:257 ============ -->
+<div class="panel" id="panel-sciillust" role="dialog" aria-modal="true"
+     aria-label="Scientific illustration" hidden>
+  <div class="panel__scroll" tabindex="-1">
+    <div class="panel__page" style="--page-h:3154">
+
+      <div class="layer layer--flip-y" style="--x:0%; --y:0.679867%; --w:99.975556%; --h:31.786209%; --blend:hard-light">
+        <img src="assets/ulva.webp" alt="" decoding="async">
+      </div>
+      <div class="layer layer--flip-y" style="--x:0%; --y:32.466709%; --w:99.975556%; --h:31.786209%; --blend:hard-light">
+        <img src="assets/ulva.webp" alt="" decoding="async">
+      </div>
+      <div class="layer layer--flip-y" style="--x:0%; --y:65.535828%; --w:99.975556%; --h:31.786209%; --blend:hard-light">
+        <img src="assets/ulva.webp" alt="" decoding="async">
+      </div>
+
+      <!-- Darkens the whole page so the plates read against the algae. -->
+      <div class="layer shader" style="--x:0%; --y:0%; --w:100%; --h:100%; --blend:multiply; --opacity:.5"></div>
+
+      <img class="layer" style="--x:19.375%; --y:2.790108%; --w:59.375%; --h:35.066582%"
+           src="assets/fig-wasp.webp" alt="Fig–wasp mutualism, a scientific illustration" decoding="async">
+
+      <img class="layer" style="--x:10.972222%; --y:40.868738%; --w:78.055556%; --h:27.552314%"
+           src="assets/red-algae.webp" alt="Red Algae of Monterey, a scientific illustration" decoding="async">
+
+      <img class="layer" style="--x:10.972222%; --y:71.433101%; --w:78.75%; --h:24.984147%"
+           src="assets/kelp-poster.webp" alt="Giant kelp ecomorphs of Monterey Bay, a scientific illustration" decoding="async">
+
+    </div>
+  </div>
+  <button class="panel__close" type="button" aria-label="Close scientific illustration">
+    <img src="assets/x-button.svg" alt="" aria-hidden="true">
+  </button>
+</div>
+
+<script src="js/panels.js" defer></script>
 
 
 <!-- Mobile frame — Figma node 113:398. The designed "under construction"
