@@ -29,6 +29,51 @@
       <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="9"
                          xChannelSelector="R" yChannelSelector="G"/>
     </filter>
+
+    <!--
+      Wobble for the hand-lettered name. Four separate noise fields, identical
+      apart from the seed, that the CSS steps through one frame at a time. That
+      discreteness is the point: hand-drawn animation boils because each
+      redrawn frame lands in a slightly different place, so tweening between
+      two fields would read as a smooth ripple instead of a redrawn line.
+
+      fractalNoise, not turbulence: its values sit around 0.5, so the
+      displacement is centred on zero and the lettering stays put while its
+      edges move. numOctaves="1" keeps the noise smooth — the lines wave
+      rather than fray — and is also the cheapest to compute, which matters
+      when the field is regenerated ten times a second.
+
+      baseFrequency 0.03 puts one wave every ~33px, well inside the ~100px
+      letters, so a stroke wavers along its own length; at a lower frequency
+      the field is near-uniform across a letter and the whole letter just
+      shifts instead. scale 7 displaces by at most ~3.5px. Both are in CSS
+      pixels of the rendered image, so on a narrow window — where the
+      wordmark is drawn smaller — the wobble reads slightly larger.
+    -->
+    <filter id="scribble-1" x="-2%" y="-2%" width="104%" height="104%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="scribble-2" x="-2%" y="-2%" width="104%" height="104%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="19" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="scribble-3" x="-2%" y="-2%" width="104%" height="104%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="scribble-4" x="-2%" y="-2%" width="104%" height="104%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="71" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
   </defs>
 </svg>
 
@@ -97,7 +142,7 @@
       <img src="assets/portfolio-word.webp" alt="Portfolio" decoding="async">
     </p>
 
-    <h1 class="layer" style="--x:5.227429%; --y:-9.861375%; --w:87.479169%; --h:87.490236%">
+    <h1 class="layer wobble" data-animate-in-view style="--x:5.227429%; --y:-9.861375%; --w:87.479169%; --h:87.490236%">
       <img src="assets/name.webp" alt="Mei Knutson" fetchpriority="high" decoding="async">
     </h1>
 

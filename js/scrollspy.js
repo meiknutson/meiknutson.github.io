@@ -82,6 +82,24 @@
     ).observe(video);
   }
 
+  // Filter-driven animations (the wordmark's scribble) regenerate a noise
+  // field every frame, which is not work worth doing for a section that has
+  // scrolled away. These run by default and are paused here, so a missed or
+  // wrong initial callback — which is exactly what the nav highlight above
+  // had to stop relying on — leaves them moving rather than frozen.
+  var animated = document.querySelectorAll("[data-animate-in-view]");
+  if (animated.length && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle("is-offscreen", !entry.isIntersecting);
+        });
+      },
+      { root: scroller, rootMargin: "100px 0px" }
+    );
+    Array.prototype.forEach.call(animated, function (el) { io.observe(el); });
+  }
+
   scroller.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   window.addEventListener("load", update);

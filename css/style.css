@@ -418,6 +418,40 @@ body {
   pointer-events: none;
 }
 
+/* The wordmark boils, the way a redrawn line does in hand-drawn animation.
+   Each frame is a whole SVG filter rather than an interpolated value: CSS
+   cannot tween two different url() filters, and tweening is not wanted here
+   anyway, so step-end holds each noise field for its full 100ms and then cuts
+   to the next. Four frames at 10fps: with only three the loop is short enough
+   to notice, and much above 10fps it stops looking drawn and starts looking
+   like a vibration.
+
+   Regenerating the noise field is the expensive part, so js/scrollspy.js
+   pauses the animation once the name scrolls away. It pauses rather than
+   enables: the animation is on from the start, so if that script or its
+   observer never runs the wordmark still moves, and a paused animation holds
+   a single filter — the same cost as the static state below. */
+.wobble > img {
+  filter: url(#scribble-1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wobble > img {
+    animation: scribble 400ms step-end infinite;
+  }
+
+  .wobble.is-offscreen > img {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scribble {
+  0%   { filter: url(#scribble-1); }
+  25%  { filter: url(#scribble-2); }
+  50%  { filter: url(#scribble-3); }
+  75%  { filter: url(#scribble-4); }
+}
+
 /* Frames reuse the same assets at different rotations. Against the baked,
    pre-transposed files those come out as plain flips. Applied to the layer
    rather than the image so a masked layer mirrors its mask along with its
