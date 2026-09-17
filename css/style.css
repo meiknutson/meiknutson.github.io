@@ -25,6 +25,12 @@
   --type-label: 26;     /* piece labels and the nav, which match each other */
   --type-stroke: 1.4;   /* px, same artboard units as --type-lg */
   --nav-h: 72;          /* artboard px; the artboard's own bar is 104 */
+
+  /* Detail panels render their artboard smaller than the sections do.
+     26/36.667 — the nav size over the artboard's body size — so the panels'
+     body copy lands exactly on the nav, and every image, heading and gap
+     scales by the same amount rather than needing its own adjustment. */
+  --panel-zoom: 0.709091;
   --artboard: 1440;  /* the desktop artboard width, for the pinned nav */
 }
 
@@ -165,7 +171,9 @@ body {
    that is what keeps it in the same spot however far you scroll. */
 
 .panel {
-  --panel-scale: min(100vw, calc(var(--artboard) * 1px));
+  /* The rendered width of the page inside — what the close button and the
+     panel's type are both measured against. */
+  --panel-scale: min(100vw, calc(var(--artboard) * var(--panel-zoom) * 1px));
 
   position: fixed;
   inset: 0;
@@ -194,7 +202,7 @@ body {
 .panel__page {
   position: relative;
   width: 100%;
-  max-width: calc(var(--artboard) * 1px);
+  max-width: calc(var(--artboard) * var(--panel-zoom) * 1px);
   margin-inline: auto;
   aspect-ratio: var(--artboard) / var(--page-h);
   overflow: hidden;
@@ -292,6 +300,20 @@ body {
 /* A flat black scrim, as on the skier automaton page. */
 .scrim {
   background: #000;
+}
+
+/* A plain media box — no corner radius, unlike .card. The artboard rounds
+   the cards on the main sections but not the media on the detail pages. */
+.p-media {
+  overflow: hidden;
+}
+
+.p-media > video,
+.p-media > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* --- Layers ------------------------------------------------------------- */
