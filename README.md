@@ -50,14 +50,4 @@ Two notes on how the art is stored:
   blend mode against the art underneath. Both artboards position the mask
   identically relative to its contents, so one CSS rule serves both.
 
-## Known gaps
 
-- Only the home page exists. `sustainability`, `physical`, `print` and `about`
-  link to `#`. All four have frames in the Figma file (`1:8`, `1:6`, `1:10`,
-  `1:14`) that haven't been built yet.
-- The 768px breakpoint is a choice, not something the design specifies — the
-  file gives a 1440 frame and a 402 frame and nothing in between. Between 768
-  and 1440 the desktop artboard scales down proportionally, so nav text gets
-  small at the low end.
-- `assets/source/` is 43MB of PNG masters. Worth moving out of git (or into
-  LFS) before this repo grows.
