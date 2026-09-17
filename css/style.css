@@ -246,7 +246,10 @@ body {
   border: 0;
   background: none;
   cursor: pointer;
-  mix-blend-mode: color-dodge;
+  /* No mix-blend-mode here. The artboard puts the X on a blend, but applying
+     it to the element composites its whole 99x80 box, which showed up as a
+     faint square panel around the cross. The SVG keeps its own blend
+     internally, which renders the same solid magenta without the box. */
 }
 
 .panel__close > img {
@@ -257,11 +260,10 @@ body {
   margin-top: -16.46%;
 }
 
-/* The skier page puts its X slightly higher and on a different blend. */
+/* Four of the pages put their X slightly higher and further left. */
 .panel__close--overlay {
   left: calc(50% - var(--panel-scale) / 2 + 64 / 1440 * var(--panel-scale));
   top: calc(50 / 1440 * var(--panel-scale));
-  mix-blend-mode: overlay;
 }
 
 .panel__close:focus-visible {
