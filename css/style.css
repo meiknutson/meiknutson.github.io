@@ -171,9 +171,9 @@ body {
    that is what keeps it in the same spot however far you scroll. */
 
 .panel {
-  /* The rendered width of the page inside — what the close button and the
-     panel's type are both measured against. */
-  --panel-scale: min(100vw, calc(var(--artboard) * var(--panel-zoom) * 1px));
+  /* The full-width artboard column: the background art and the close button
+     are both measured against this, so they stay at their designed size. */
+  --panel-scale: min(100vw, calc(var(--artboard) * 1px));
 
   position: fixed;
   inset: 0;
@@ -198,17 +198,40 @@ body {
   outline: none;
 }
 
-/* The artboard: 1440 wide like the sections, --page-h tall. */
+/* The artboard: 1440 wide like the sections. The page is --panel-zoom of
+   --page-h tall, because the content inside is scaled by that much and the
+   page should end where the content does. */
 .panel__page {
   position: relative;
   width: 100%;
-  max-width: calc(var(--artboard) * var(--panel-zoom) * 1px);
+  max-width: calc(var(--artboard) * 1px);
   margin-inline: auto;
-  aspect-ratio: var(--artboard) / var(--page-h);
+  aspect-ratio: var(--artboard) / calc(var(--page-h) * var(--panel-zoom));
   overflow: hidden;
   background: var(--canvas);
   container-type: size;
   isolation: isolate;
+}
+
+/* Background and content are both laid out on the full artboard, so every
+   layer inside keeps the coordinates Figma gave it. Only the content group
+   is scaled — that is what shrinks the pieces and the copy while leaving
+   the algae, dots and scrims at their designed size, full bleed.
+
+   The background is taller than the page it sits in and simply gets clipped,
+   which is what keeps it covering the full height at its own scale. */
+.panel__bg,
+.panel__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100cqw * var(--page-h) / var(--artboard));
+}
+
+.panel__content {
+  transform: scale(var(--panel-zoom));
+  transform-origin: top center;
 }
 
 /* Placed against the centred artboard column rather than the viewport, so it
