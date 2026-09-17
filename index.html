@@ -452,13 +452,17 @@
         a product campaign designed to make use of the skeletons of invasive “zombie urchins” that threaten california kelp forests
       </p>
 
-      <!-- The campaign film. 72s and 21MB even transcoded down, so it ships
-           preload="none" behind a poster and with controls — nothing
-           downloads until someone chooses to play it. -->
+      <!-- The campaign film, as the artboard intends: this layer is a YouTube
+           embed in Figma, which is why it exported as an empty bordered box.
+           nocookie so nothing is set until it is actually played, and lazy so
+           it costs nothing while the panel is closed. -->
       <div class="layer p-embed" style="--x:19.814390%; --y:11.489850%; --w:49.636370%; --h:21.716776%">
-        <video src="assets/invasive-ad.mp4" poster="assets/invasive-ad-poster.webp"
-               controls playsinline preload="none"
-               aria-label="Invasive Pieces campaign film"></video>
+        <iframe src="https://www.youtube-nocookie.com/embed/e3jrZW9ZKRI"
+                title="INVASIVE PIECES — campaign film"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                allowfullscreen></iframe>
       </div>
 
       <p class="layer p-text" style="--x:76.541670%; --y:28.303332%; --w:6.943183%; --h:1.991574%">

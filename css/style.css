@@ -301,11 +301,11 @@ body {
   background: #000;
 }
 
-.p-embed > video {
+.p-embed > iframe {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  border: 0;
 }
 
 /* A layer whose content sits at an angle in the artboard. The child carries
