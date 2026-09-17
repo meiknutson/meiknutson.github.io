@@ -452,7 +452,14 @@
         a product campaign designed to make use of the skeletons of invasive “zombie urchins” that threaten california kelp forests
       </p>
 
-      <div class="layer p-embed" style="--x:19.814390%; --y:11.489850%; --w:49.636370%; --h:21.716776%"></div>
+      <!-- The campaign film. 72s and 21MB even transcoded down, so it ships
+           preload="none" behind a poster and with controls — nothing
+           downloads until someone chooses to play it. -->
+      <div class="layer p-embed" style="--x:19.814390%; --y:11.489850%; --w:49.636370%; --h:21.716776%">
+        <video src="assets/invasive-ad.mp4" poster="assets/invasive-ad-poster.webp"
+               controls playsinline preload="none"
+               aria-label="Invasive Pieces campaign film"></video>
+      </div>
 
       <p class="layer p-text" style="--x:76.541670%; --y:28.303332%; --w:6.943183%; --h:1.991574%">
         the ad!

@@ -23,3 +23,6 @@
 # Python bytecode from tools/
 __pycache__/
 *.pyc
+
+# Video masters (transcoded into assets/*.mp4)
+/foryoutube.mp4
