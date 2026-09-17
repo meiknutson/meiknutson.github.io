@@ -277,6 +277,27 @@ body {
 .panel__close__x > span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
 .panel__close__x > span:last-child  { transform: translate(-50%, -50%) rotate(-45deg); }
 
+/* Hover blooms the cross: a touch of blur to soften the edges, then two
+   drop-shadows in the cross's own colour for the glow. Because the filter
+   sits inside the blended wrapper, the glow goes through the same blend as
+   the cross and so reads as the same colour rather than a lighter halo.
+   Radii are in artboard units so the bloom scales with the button. */
+.panel__close__x {
+  transition: filter 160ms ease;
+}
+
+.panel__close:hover .panel__close__x,
+.panel__close:focus-visible .panel__close__x {
+  filter:
+    blur(calc(0.4 / 1440 * var(--panel-scale)))
+    drop-shadow(0 0 calc(3.5 / 1440 * var(--panel-scale)) var(--accent))
+    drop-shadow(0 0 calc(9 / 1440 * var(--panel-scale)) var(--accent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel__close__x { transition: none; }
+}
+
 /* Four of the pages put their X slightly higher and on a different blend. */
 .panel__close--overlay {
   left: calc(50% - var(--panel-scale) / 2 + 64 / 1440 * var(--panel-scale));
