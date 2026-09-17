@@ -288,10 +288,16 @@ body {
 
 .panel__close:hover .panel__close__x,
 .panel__close:focus-visible .panel__close__x {
+  /* Plain lengths and a literal colour, no calc() or var() inside the filter.
+     Firefox drops a whole filter declaration if any part of the value is
+     one it will not parse, which is what left the bloom doing nothing there
+     — the same all-or-nothing failure as the nav's backdrop-filter. The
+     button only spans 53-99px across the supported widths, so fixed radii
+     read much the same throughout. */
   filter:
-    blur(calc(0.4 / 1440 * var(--panel-scale)))
-    drop-shadow(0 0 calc(3.5 / 1440 * var(--panel-scale)) var(--accent))
-    drop-shadow(0 0 calc(9 / 1440 * var(--panel-scale)) var(--accent));
+    blur(0.4px)
+    drop-shadow(0 0 3.5px #ff00f2)
+    drop-shadow(0 0 9px #ff00f2);
 }
 
 @media (prefers-reduced-motion: reduce) {
